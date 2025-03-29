@@ -1,1 +1,23 @@
+threads >> memory race;
+mutex >> lock for a variable >> only one thread can access it at a time;
+
+!! can use printf, memset, atd. not libft or own printf;
+
+compiled with -pthread flag;
+
+functions used >> usleep(), gettimeofday(), pthread_create(), pthread_join(), pthread_mutex_init(), pthread_mutex_destroy(), pthread_mutex_lock(), pthread_mutex_unlock();
+
+data structure for storing all required information about philosopher;
+creating the correct number of philosophers;
+correct nb of therads;
+creating rutine (things to do, order) >> sleep, eat, think, repeat;
+initiating threads with said rutine;
+loop until philosophers die;
+
+prnting logs when state of a philosopher changes;
+bonus: semaphores and processes
+
+#include <stdio.h>
+#include <unistd.h>
+
 
