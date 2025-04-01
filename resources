@@ -20,4 +20,6 @@ bonus: semaphores and processes
 #include <stdio.h>
 #include <unistd.h>
 
+cant use exit();
+
 

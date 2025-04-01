@@ -1,5 +1,6 @@
+#include "philosophers.h"
 
-int ft_atoi(char *argv)
+int ft_atoi(char *str)
 {
     int i;
     int sign;
@@ -30,15 +31,24 @@ int check_for_input(char *argv)
 {
     int nb;
     int i;
+    int countplus;
 
+    i = 0;
+    countplus = 0;
     nb = ft_atoi(argv);
-    if (nb <=0 || nb > 200)
+    if (nb <= 0 || nb > 200)
         return (1);
     while (argv[i] != '\0')
     {
-        if (argv[i] < '0' || argv[i] > '9')
+        if ((argv[i] < '0' || argv[i] > '9') && argv[i] != '+')
+            return (1);
+        if (argv[i] == '+')
+            countplus++;
+        if (argv[i] == '+' && i != 0)
             return (1);
         i++;
     }
+    if (countplus > 1)
+        return (1);
     return (0);
 }
