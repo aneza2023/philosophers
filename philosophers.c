@@ -1,6 +1,11 @@
 
 #include "philosophers.h"
 
+int philosophers(void)
+{
+
+}
+
 int main(int argc, char *argv[])
 {
     int i;
@@ -11,19 +16,15 @@ int main(int argc, char *argv[])
         write (1, "Error\n", 6);
         return (1);
     }
-    else
+    while (i <= argc - 1)
     {
-        while (i <= 4) // need to do another check if 5th argument >> can as only one be 0
+        if (check_for_input(argv[i], i) == 1)
         {
-            if (check_for_input(argv[i]) == 1)
-            {
-                write (1, "Error\n", 6);
-                return (1);
-            }
-            i++;
+            write (1, "Error\n", 6);
+            return (1);
         }
-        //philosophers();
-        printf("ddd");
+        i++;
     }
+    //philosophers();
     return (0);
 }

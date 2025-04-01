@@ -27,7 +27,7 @@ int ft_atoi(char *str)
     return (result);
 }
 
-int check_for_input(char *argv)
+int check_for_input(char *argv, int id)
 {
     int nb;
     int i;
@@ -36,19 +36,17 @@ int check_for_input(char *argv)
     i = 0;
     countplus = 0;
     nb = ft_atoi(argv);
-    if (nb <= 0 || nb > 200)
+    if ((nb <= 0 || nb > 200) && id < 5)
+        return (1);
+    if ((nb < 0 || nb > 200) && id == 5)
         return (1);
     while (argv[i] != '\0')
     {
         if ((argv[i] < '0' || argv[i] > '9') && argv[i] != '+')
             return (1);
-        if (argv[i] == '+')
-            countplus++;
         if (argv[i] == '+' && i != 0)
             return (1);
         i++;
     }
-    if (countplus > 1)
-        return (1);
     return (0);
 }

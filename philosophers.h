@@ -6,7 +6,7 @@
 # include <pthread.h>
 
 //check
-int check_for_input(char *argv);
+int check_for_input(char *argv, int id);
 int ft_atoi(char *argv);
 
 
