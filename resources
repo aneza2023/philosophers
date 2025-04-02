@@ -23,3 +23,7 @@ bonus: semaphores and processes
 cant use exit();
 
 
+cc *.c -lpthread
+for some reason need to include
+
+
