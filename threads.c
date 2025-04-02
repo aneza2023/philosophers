@@ -2,6 +2,9 @@
 
 void *philosophers_routine(void *arg)
 {
+    // t_philo *philosopher;
+
+    // philosopher = malloc(sizeof(t_philo));
     int id;
 
     id = *(int*)arg; // what kind of sorcery is this??

@@ -40,6 +40,8 @@ int check_for_input(char *argv, int id)
         return (1);
     if ((nb < 0 || nb > 200) && id == 5)
         return (1);
+    if (nb == 1 && id == 1)
+        return (1);
     while (argv[i] != '\0')
     {
         if ((argv[i] < '0' || argv[i] > '9') && argv[i] != '+')

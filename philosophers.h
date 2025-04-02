@@ -12,13 +12,17 @@ typedef struct input_values
     int to_die;
     int to_eat;
     int to_sleep;
-    // optional nb of meals;
+    int opt_meals;      // optional nb of meals;
 }   t_val;
 
-// typedef struct philo_threads
-// {
-//     int id;
-// }   t_thread;
+typedef struct philo_threads
+{
+    int id;
+    int nb_of_meals;
+    int lfork;
+    int rfork;
+    int death;
+}   t_philo;
 
 
 //check
