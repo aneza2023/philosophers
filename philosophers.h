@@ -5,6 +5,7 @@
 # include <unistd.h>
 # include <pthread.h>
 # include <stdlib.h>
+# include <string.h>
 
 typedef struct input_values
 {
@@ -22,6 +23,7 @@ typedef struct philo_threads
     int lfork;
     int rfork;
     int death;
+    t_val   *input;
 }   t_philo;
 
 
