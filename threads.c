@@ -25,9 +25,9 @@ int creating_threads(t_val *input)
         philosopher[i] = malloc(sizeof(t_philo));
         memset(philosopher[i], 0, sizeof(t_philo));
         philosopher[i]->id = i;
-        //philosopher[i]->input = input;
+        philosopher[i]->input = input;
         printf("philo %d\n", philosopher[i]->id);
-        pthread_create(&philo[i], NULL, philosophers_routine, &philosopher[i]);
+        pthread_create(&philo[i], NULL, philosophers_routine, philosopher[i]);
         i++;
     }
     // i = 1;
