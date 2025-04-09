@@ -4,8 +4,11 @@
 int putting_values(t_val *input, char *todie, char *toeat, char *tosleep)
 {
 	input->to_die = ft_atoi(todie);
+	//printf("TO DIE %d", input->to_die);
 	input->to_eat = ft_atoi(toeat);
+	//printf("TO EAT %d", input->to_eat);
 	input->to_sleep = ft_atoi(tosleep);
+	//printf("TO SLEEP %d", input->to_sleep);
 	return (0);
 }
 

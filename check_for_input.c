@@ -36,11 +36,11 @@ int check_for_input(char *argv, int id)
 	i = 0;
 	countplus = 0;
 	nb = ft_atoi(argv);
-	if ((nb <= 0 || nb > 200) && id < 5)
+	if (nb <= 0 && id < 5)
 		return (1);
-	if ((nb < 0 || nb > 200) && id == 5)
+	if (nb < 0 && id == 5)
 		return (1);
-	if (nb == 1 && id == 1) // might not put error, but phil died..
+	if ((nb == 1 && nb > 200) && id == 1) // might not put error, but phil died..
 		return (1);
 	while (argv[i] != '\0')
 	{
