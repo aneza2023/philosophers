@@ -14,7 +14,7 @@ suseconds_t  getting_timestamp(suseconds_t original_time)
 void *philosophers_routine(void *arg) // issue might be using just susecond, might use both = timestamp does not work
 {
 	t_philo 	*philosopher;
-	suseconds_t	current_time;
+	suseconds_t	current_time; //struct timeval might be needed
 
 	philosopher = (t_philo *)arg;
 	//printf ("philo %d here\n", philosopher->id);
