@@ -6,7 +6,7 @@
 /*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 16:52:49 by ahavrank          #+#    #+#             */
-/*   Updated: 2025/04/10 17:07:51 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/04/10 18:13:32 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void *observer_routine(void *arg)
     philosophers = arg;
     i = 0;
     status = 0;
-    while (philosophers[status] != '\0')
+    while (philosophers[status] != NULL)
     {
         if (philosophers[status]->death == 1)
         {
@@ -30,7 +30,7 @@ void *observer_routine(void *arg)
                 philosophers[i]->someone_died = 1;
                 i++;
             }
-            while (philosophers[i] != '\0')
+            while (philosophers[i] != NULL)
             {
                 philosophers[i]->someone_died = 1;
                 i++;

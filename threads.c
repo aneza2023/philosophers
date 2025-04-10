@@ -6,7 +6,7 @@
 /*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:54:51 by ahavrank          #+#    #+#             */
-/*   Updated: 2025/04/10 16:59:32 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/04/10 18:13:12 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void *philosophers_routine(void *arg)
 		philosopher->input->opt_meals = 2147483647;
 	current_time = gettimeofday(&philosopher->start, NULL);
 	philosopher->last_meal = current_time;
-	//start_with_even(philosopher);
+	start_with_even(philosopher);
 	return (NULL);
 }
 
@@ -102,7 +102,7 @@ int creating_threads(t_val *input)
 		return(1);
 	}
 	creating_threads_cont(philosopher, philo, forks, input);
-	creating_observer(philosopher);
+	//creating_observer(philosopher);
 	joining_threads(philo, philosopher);
 	return (0);
 }
