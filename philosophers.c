@@ -1,50 +1,53 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philosophers.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/10 15:25:50 by ahavrank          #+#    #+#             */
+/*   Updated: 2025/04/10 15:27:58 by ahavrank         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "philosophers.h"
 
-int putting_values(t_val *input, char *todie, char *toeat, char *tosleep)
+int	putting_values(t_val *input, char *todie, char *toeat, char *tosleep)
 {
 	input->to_die = ft_atoi(todie);
-	//printf("TO DIE %d", input->to_die);
 	input->to_eat = ft_atoi(toeat);
-	//printf("TO EAT %d", input->to_eat);
 	input->to_sleep = ft_atoi(tosleep);
-	//printf("TO SLEEP %d", input->to_sleep);
 	return (0);
 }
 
-int philosophers(t_val *input, char *todie, char *toeat, char *tosleep)
+int	philosophers(t_val *input, char *todie, char *toeat, char *tosleep)
 {
-	//printf("%d", input->philo);
 	putting_values(input, todie, toeat, tosleep);
 	creating_threads(input);
 	return (0);
 }
 
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
-	t_val   *input;
+	t_val	*input;
 
 	if (argc <= 4 || argc >= 7)
-	{
-		write (1, "Error\n", 6);
-		return (1);
-	}
+		return (write (1, "Error\n", 6), 1);
 	while (argc > 1)
 	{
 		if (check_for_input(argv[argc - 1], (argc - 1)) == 1)
-		{
-			write (1, "Error\n", 6);
-			return (1);
-		}
+			return (write (1, "Error\n", 6), 1);
 		argc--;
 	}
 	input = malloc(sizeof(t_val));
-	if (input == NULL) // do i need to write error? could write fce before return na prasaka
-		return (1);
+	if (input == NULL)
+		return (write (1, "Error\n", 6), 1);
 	input->philo = ft_atoi(argv[1]);
-	if (argv[5] != NULL)
+	if (argv[5] != NULL && ft_atoi(argv[5]) != 0)
 		input->opt_meals = ft_atoi(argv[5]);
-	if (philosophers(input, argv[2], argv[3], argv[4]) == 1) // this kind of check up needed??
+	if (argv[5] != NULL && ft_atoi(argv[5]) == 0)
+		input->opt_meals = -1;
+	if (philosophers(input, argv[2], argv[3], argv[4]) == 1)
 		return (1);
 	return (0);
 }

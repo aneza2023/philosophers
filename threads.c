@@ -1,43 +1,42 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   threads.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/10 14:54:51 by ahavrank          #+#    #+#             */
+/*   Updated: 2025/04/10 16:59:32 by ahavrank         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosophers.h"
 
-suseconds_t  getting_timestamp(suseconds_t original_time)
+suseconds_t  getting_timestamp(struct timeval original_time)
 {
 	struct timeval	current_time;
-	suseconds_t		curr;
+	suseconds_t		result;
 
 	gettimeofday(&current_time, NULL);
-	curr = current_time.tv_usec - original_time;
-	curr = curr / 1000;
-	return(curr);
+	result = ((current_time.tv_sec - original_time.tv_sec) * 1000) + ((current_time.tv_usec - original_time.tv_usec) / 1000);
+	return(result);
 }
 
-void *philosophers_routine(void *arg) // issue might be using just susecond, might use both = timestamp does not work
+void *philosophers_routine(void *arg)
 {
 	t_philo 	*philosopher;
-	suseconds_t	current_time; //struct timeval might be needed
+	suseconds_t	current_time;
 
 	philosopher = (t_philo *)arg;
-	//printf ("philo %d here\n", philosopher->id);
 	philosopher->nb_of_meals = 0;
+	philosopher->nb_of_sleep = 0;
 	philosopher->death = 0;
-	gettimeofday(&philosopher->start, NULL);
-	current_time = getting_timestamp(philosopher->start.tv_usec);
-	if (philosopher->id % 2 == 0)
-	{
-		pthread_mutex_lock(philosopher->lfork);
-		printf("%ld %d has taken left fork\n", getting_timestamp(philosopher->start.tv_usec), philosopher->id);
-		pthread_mutex_lock(philosopher->rfork);
-		printf("%ld %d has taken right fork\n", getting_timestamp(philosopher->start.tv_usec), philosopher->id);
-		printf("%ld %d is eating\n", getting_timestamp(philosopher->start.tv_usec), philosopher->id);
-		usleep(philosopher->input->to_eat * 1000);
-		pthread_mutex_unlock(philosopher->lfork);
-		pthread_mutex_unlock(philosopher->rfork);
-		printf("%ld %d is sleeping\n", getting_timestamp(philosopher->start.tv_usec), philosopher->id);
-		usleep(philosopher->input->to_sleep * 1000);
-		printf("%ld %d is thinking\n", getting_timestamp(philosopher->start.tv_usec), philosopher->id);
-	}
-
-	//printf("\n%ld\n", current_time);
+	philosopher->someone_died = 0;
+	if (philosopher->input->opt_meals == 0)
+		philosopher->input->opt_meals = 2147483647;
+	current_time = gettimeofday(&philosopher->start, NULL);
+	philosopher->last_meal = current_time;
+	//start_with_even(philosopher);
 	return (NULL);
 }
 
@@ -64,7 +63,6 @@ int creating_threads_cont(t_philo **philosopher, pthread_t *philo, pthread_mutex
 	while (i < input->philo)
 	{
 		philosopher[i] = malloc(sizeof(t_philo));  //free needed, allocation failed
-
 		memset(philosopher[i], 0, sizeof(t_philo));
 		philosopher[i]->id = i + 1;
 		philosopher[i]->input = input;
@@ -104,6 +102,7 @@ int creating_threads(t_val *input)
 		return(1);
 	}
 	creating_threads_cont(philosopher, philo, forks, input);
+	creating_observer(philosopher);
 	joining_threads(philo, philosopher);
 	return (0);
 }
