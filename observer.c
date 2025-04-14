@@ -16,22 +16,22 @@ void *observer_routine(void *arg)
 {
     int     i;
     int     k;
-    t_philo **philosophers;
+    t_observer   observer;
 
-    philosophers = arg;
+    observer = arg;
     i = 0;
     k = 0;
-    while (philosophers[k] != NULL)
+    while (observer->philosophers[k] != NULL)
     {
-        if (philosophers[k]->death == 1)
+        if (observer->philosophers[k]->death == 1)
         {
-            while (philosophers[i] != NULL)
+            while (observer->philosophers[i] != NULL)
             {
-                philosophers[i]->someone_died = 1;
+                observer->philosophers[i]->someone_died = 1;
                 i++;
             }
         }
-        printf("PHILL %d MEALS %d", philosophers[k]->id, philosophers[k]->nb_of_meals);
+        printf("PHILL %d MEALS %d", observer->philosophers[k]->id, observer->philosophers[k]->nb_of_meals);
         k++;
     }
     return (0);
@@ -42,9 +42,12 @@ int creating_observer(t_philo **philosophers, pthread_t *philo)
     t_observer   observer;
     pthread_t    observthread;
 
+    observer = malloc(sizeof(t_observer));
+    if (observer == NULL) // need to free stuff
+        return (1);
     observer->philosophers = philosophers;
     observer->philothread = philo;
-    pthread_create(&observthread, NULL, observer_routine, philosophers);
+    pthread_create(&observthread, NULL, observer_routine, observer);
     pthread_join(observer, NULL);
     return (0);
 }

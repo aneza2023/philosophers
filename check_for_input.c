@@ -43,10 +43,8 @@ int check_for_input(char *argv, int id)
 {
 	int nb;
 	int i;
-	int countplus;
 
 	i = 0;
-	countplus = 0;
 	nb = ft_atoi(argv);
 	if (nb <= 0 && id < 5)
 		return (1);
