@@ -17,16 +17,20 @@ int continue_routine(t_philo *phil)
     while (phil->input->opt_meals != -1 && phil->someone_died != 1 && (phil->nb_of_meals <= phil->input->opt_meals))
     {
         //delete later >> observer fix
-        if (getting_timestamp(phil->start) == (phil->last_meal + phil->input->to_die)) // observer thread t put in
+        if (getting_timestamp(phil->start) >= (phil->last_meal + phil->input->to_die)) // observer thread t put in
         {
             phil->death = 1;
             printf("DIED phil nb %d\n", phil->id);
+            break ;
         }
+        //printf("\ndeatSTART>> %d\n", phil->start);
+        // printf("\ndeatLASTMEAL>> %ld\n", phil->last_meal);
+        // printf("\ndeatTODIE>> %d\n", phil->input->to_die);
         pthread_mutex_lock(phil->lfork);
         printf("%ld %d has taken left fork\n", getting_timestamp(phil->start), phil->id);
         pthread_mutex_lock(phil->rfork);
         printf("%ld %d has taken right fork\n", getting_timestamp(phil->start), phil->id);
-        printf("%ld %d is eating\n nb%d\n", getting_timestamp(phil->start), phil->id, phil->nb_of_meals);
+        printf("%ld %d is eating\n", getting_timestamp(phil->start), phil->id);
         usleep(phil->input->to_eat * 1000);
         phil->nb_of_meals++;
         phil->last_meal = getting_timestamp(phil->start);
@@ -49,7 +53,7 @@ int start_with_even(t_philo *phil)
             printf("%ld %d has taken left fork\n", getting_timestamp(phil->start), phil->id);
             pthread_mutex_lock(phil->rfork);
             printf("%ld %d has taken right fork\n", getting_timestamp(phil->start), phil->id);
-            printf("%ld %d is eating\n nb%d\n", getting_timestamp(phil->start), phil->id, phil->nb_of_meals);
+            printf("%ld %d is eating\n", getting_timestamp(phil->start), phil->id);
             usleep(phil->input->to_eat * 1000);
             phil->nb_of_meals++;
             pthread_mutex_unlock(phil->lfork);
@@ -67,20 +71,3 @@ int start_with_even(t_philo *phil)
     continue_routine(phil);
     return (0);
 }
-
-
-    // if (philosopher->id % 2 == 0)
-	// {
-	// 	pthread_mutex_lock(philosopher->lfork);
-	// 	printf("%ld %d has taken left fork\n", getting_timestamp(philosopher->start), philosopher->id);
-	// 	pthread_mutex_lock(philosopher->rfork);
-	// 	printf("%ld %d has taken right fork\n", getting_timestamp(philosopher->start), philosopher->id);
-	// 	printf("%ld %d is eating\n", getting_timestamp(philosopher->start), philosopher->id);
-	// 	usleep(philosopher->input->to_eat * 1000);
-	// 	pthread_mutex_unlock(philosopher->lfork);
-	// 	pthread_mutex_unlock(philosopher->rfork);
-	// 	printf("%ld %d is sleeping\n", getting_timestamp(philosopher->start), philosopher->id);
-	// 	usleep(philosopher->input->to_sleep * 1000);
-	// 	printf("%ld %d is thinking\n", getting_timestamp(philosopher->start), philosopher->id);
-	// }
-    // continue_routine(philosopher);

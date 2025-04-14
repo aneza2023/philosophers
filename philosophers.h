@@ -23,7 +23,7 @@
 typedef struct input_values
 {
 	int	philo;
-	int	to_die;
+	suseconds_t	to_die;
 	int	to_eat;
 	int	to_sleep;
 	int	opt_meals;      // optional nb of meals;

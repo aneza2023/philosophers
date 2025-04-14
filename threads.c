@@ -76,6 +76,7 @@ int creating_threads_cont(t_philo **philosopher, pthread_t *philo, pthread_mutex
 		pthread_create(&philo[i], NULL, philosophers_routine, philosopher[i]);
 		i++;
 	}
+	creating_observer(philosopher);
 	return (0);
 }
 
@@ -102,7 +103,6 @@ int creating_threads(t_val *input)
 		return(1);
 	}
 	creating_threads_cont(philosopher, philo, forks, input);
-	//creating_observer(philosopher);
 	joining_threads(philo, philosopher);
 	return (0);
 }
