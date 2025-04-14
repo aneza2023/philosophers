@@ -76,7 +76,7 @@ int creating_threads_cont(t_philo **philosopher, pthread_t *philo, pthread_mutex
 		pthread_create(&philo[i], NULL, philosophers_routine, philosopher[i]);
 		i++;
 	}
-	creating_observer(philosopher);
+	creating_observer(philosopher, philo);
 	return (0);
 }
 

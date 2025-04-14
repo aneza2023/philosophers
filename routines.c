@@ -45,12 +45,11 @@ int phil_death(t_philo *phil)
 
 int continue_routine(t_philo *phil)
 {
-    while (phil->input->opt_meals != -1 && phil->someone_died != 1 && (phil->nb_of_meals <= phil->input->opt_meals))
+    while (phil->input->opt_meals != -1 && phil->death != 1 && (phil->nb_of_meals <= phil->input->opt_meals))
     {
-        //delete later >> observer fix
-        //printf("\ndeatSTART>> %d\n", phil->start);
-        // printf("\ndeatLASTMEAL>> %ld\n", phil->last_meal);
-        // printf("\ndeatTODIE>> %d\n", phil->input->to_die);
+        if (phil->someone_died == 1)
+            break ;
+        printf("SOMEONEDIED %d\n", phil->someone_died);
         phil_eating(phil);
         phil_death(phil);
         phil_sleeping(phil);
@@ -66,17 +65,8 @@ int start_with_even(t_philo *phil)
     {
         if (phil->id % 2 == 0)
         {
-            pthread_mutex_lock(phil->lfork);
-            printf("%ld %d has taken left fork\n", getting_timestamp(phil->start), phil->id);
-            pthread_mutex_lock(phil->rfork);
-            printf("%ld %d has taken right fork\n", getting_timestamp(phil->start), phil->id);
-            printf("%ld %d is eating\n", getting_timestamp(phil->start), phil->id);
-            usleep(phil->input->to_eat * 1000);
-            phil->nb_of_meals++;
-            pthread_mutex_unlock(phil->lfork);
-            pthread_mutex_unlock(phil->rfork);
-            printf("%ld %d is sleeping\n", getting_timestamp(phil->start), phil->id);
-		    usleep(phil->input->to_sleep * 1000);
+            phil_eating(phil);
+            phil_sleeping(phil);
             printf("%ld %d is thinking\n", getting_timestamp(phil->start), phil->id);
         }   
         else
@@ -88,3 +78,8 @@ int start_with_even(t_philo *phil)
     continue_routine(phil);
     return (0);
 }
+
+        //delete later >> observer fix
+        //printf("\ndeatSTART>> %d\n", phil->start);
+        // printf("\ndeatLASTMEAL>> %ld\n", phil->last_meal);
+        // printf("\ndeatTODIE>> %d\n", phil->input->to_die);

@@ -15,39 +15,36 @@
 void *observer_routine(void *arg)
 {
     int     i;
-    int     status;
+    int     k;
     t_philo **philosophers;
 
     philosophers = arg;
     i = 0;
-    status = 0;
-    while (philosophers[status] != NULL)
+    k = 0;
+    while (philosophers[k] != NULL)
     {
-        if (philosophers[status]->death == 1)
+        if (philosophers[k]->death == 1)
         {
-            while (i <= status)
-            {
-                philosophers[i]->someone_died = 1;
-                i++;
-            }
             while (philosophers[i] != NULL)
             {
                 philosophers[i]->someone_died = 1;
                 i++;
             }
         }
-        i++;
+        printf("PHILL %d MEALS %d", philosophers[k]->id, philosophers[k]->nb_of_meals);
+        k++;
     }
     return (0);
 }
 
-int creating_observer(t_philo **philosophers)
+int creating_observer(t_philo **philosophers, pthread_t *philo)
 {
-    pthread_t   observer;
+    t_observer   observer;
+    pthread_t    observthread;
 
-    // observer = malloc(sizeof(pthread_t));
-    // if (observer == NULL)
-    //     return (1);
-    pthread_create(&observer, NULL, observer_routine, philosophers);
+    observer->philosophers = philosophers;
+    observer->philothread = philo;
+    pthread_create(&observthread, NULL, observer_routine, philosophers);
+    pthread_join(observer, NULL);
     return (0);
 }

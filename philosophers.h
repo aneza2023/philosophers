@@ -43,6 +43,12 @@ typedef struct philo_threads
 	suseconds_t		last_meal;
 }	t_philo;
 
+typedef struct observer
+{
+	t_philo 	**philosophers;
+	pthread_t	*philothread;
+}	t_observer;
+
 
 //check
 int				check_for_input(char *argv, int id);
@@ -52,13 +58,19 @@ int				ft_atoi(char *argv);
 int				putting_values(t_val *input, char *todie, char *toeat, char *tosleep);
 int				creating_threads(t_val *input);
 void			*philosophers_routine(void *arg);
-int				putting_values_to_philo(t_philo *philosopher);
+//int				putting_values_to_philo(t_philo *philosopher);
 int				joining_threads(pthread_t *philo, t_philo **philosophers);
 suseconds_t		getting_timestamp(struct timeval original_time);
 int				start_with_even(t_philo *philosopher);
+int 			phil_eating(t_philo *phil);
+int 			phil_sleeping(t_philo *phil);
+int 			phil_death(t_philo *phil);
+int 			continue_routine(t_philo *phil);
+int				creating_threads_cont(t_philo **philosopher, pthread_t *philo, pthread_mutex_t **forks, t_val *input);
+
 
 //observer
-int				creating_observer(t_philo **philosophers);
+int 			creating_observer(t_philo **philosophers, pthread_t *philo);
 void 			*observer_routine(void *arg);
 
 #endif
