@@ -19,15 +19,15 @@ void *observer_routine(void *arg)
     t_observer   *observer;
 
     observer = arg;
-    i = 0;
     //condition until nb of meals reached
-    while (1)
+    while (observer->philosophers[0]->someone_died != 1 && 1)
     {
         k = 0;
         while (observer->philosophers[k] != NULL)
         {
             if (observer->philosophers[k]->death == 1)
             {
+                i = 0;
                 while (observer->philosophers[i] != NULL)
                 {
                     observer->philosophers[i]->someone_died = 1;
