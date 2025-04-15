@@ -30,7 +30,14 @@ int phil_eating(t_philo *phil)
 int phil_sleeping(t_philo *phil)
 {
     printf("%ld %d is sleeping\n", getting_timestamp(phil->start), phil->id);
-    usleep(phil->input->to_sleep * 1000);
+    if (getting_timestamp(phil->start) + phil->input->to_die > getting_timestamp(phil->start) + phil->input->to_sleep)
+        usleep(phil->input->to_sleep * 1000);
+    if (getting_timestamp(phil->start) + phil->input->to_die < getting_timestamp(phil->start) + phil->input->to_sleep)
+    {
+        usleep(phil->input->to_die);
+        phil->death = 1;
+        printf("%ld %d died\n", getting_timestamp(phil->start), phil->id);
+    }
     return (0);
 }
 int phil_death(t_philo *phil)
@@ -45,13 +52,14 @@ int phil_death(t_philo *phil)
 
 int continue_routine(t_philo *phil)
 {
-    while (phil->input->opt_meals != -1 && phil->death != 1 && (phil->nb_of_meals <= phil->input->opt_meals))
+    while (phil->input->opt_meals != -1 && phil->death != 1 
+        && (phil->nb_of_meals <= phil->input->opt_meals))
     {
-        if (phil->someone_died == 1)
-        {
-            printf("SOMEONEDIED %d\n", phil->someone_died);
-            break ;
-        }
+        // if (phil->someone_died == 1)
+        // {
+        //     printf("SOMEONEDIED %d\n", phil->someone_died);
+        //     break ;
+        // }
         phil_eating(phil);
         phil_death(phil);
         phil_sleeping(phil);
@@ -85,8 +93,3 @@ int start_with_even(t_philo *phil)
     continue_routine(phil);
     return (0);
 }
-
-        //delete later >> observer fix
-        //printf("\ndeatSTART>> %d\n", phil->start);
-        // printf("\ndeatLASTMEAL>> %ld\n", phil->last_meal);
-        // printf("\ndeatTODIE>> %d\n", phil->input->to_die);

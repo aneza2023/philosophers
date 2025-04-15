@@ -20,6 +20,7 @@ void *observer_routine(void *arg)
 
     observer = arg;
     i = 0;
+    //condition until nb of meals reached
     while (1)
     {
         k = 0;
@@ -30,6 +31,7 @@ void *observer_routine(void *arg)
                 while (observer->philosophers[i] != NULL)
                 {
                     observer->philosophers[i]->someone_died = 1;
+                    printf("KKK\n");
                     i++;
                 }
             }
