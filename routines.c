@@ -12,6 +12,8 @@
 
 #include "philosophers.h"
 
+// to do>> if set meal nb - finish program after finishing eating or the whole cycle?
+
 int phil_eating(t_philo *phil)
 {
     pthread_mutex_lock(phil->lfork); // waits for, could take other in meantime - possible issue
@@ -42,7 +44,6 @@ int phil_sleeping(t_philo *phil)
         phil->death = 1;
         printf("%ld %d died\n", getting_timestamp(phil->start), phil->id);
     }
-    printf("%ld %d someone probabaly died >> %d\n", getting_timestamp(phil->start), phil->id, phil->someone_died);
     return (0);
 }
 int phil_death(t_philo *phil)
