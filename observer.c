@@ -21,6 +21,7 @@ void *observer_routine(void *arg)
     observer = arg;
     i = 0;
     k = 0;
+    //  while 1
     while (observer->philosophers[k] != NULL)
     {
         if (observer->philosophers[k]->death == 1)
