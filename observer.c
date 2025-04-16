@@ -25,8 +25,10 @@ void *observer_routine(void *arg)
         k = 0;
         while (observer->philosophers[k] != NULL)
         {
-            if (observer->philosophers[k]->death == 1)
+            if (getting_timestamp(observer->philosophers[k]->start) > (observer->philosophers[k]->last_meal + observer->philosophers[k]->input->to_die))
             {
+                observer->philosophers[k]->death = 1;
+                printf("%ld %d died\n", getting_timestamp(observer->philosophers[k]->start), observer->philosophers[k]->id);
                 i = 0;
                 while (observer->philosophers[i] != NULL)
                 {
