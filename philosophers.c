@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:25:50 by ahavrank          #+#    #+#             */
-/*   Updated: 2025/04/10 15:27:58 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/04/17 12:15:51 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	putting_values(t_val *input, char *todie, char *toeat, char *tosleep)
 	input->to_die = ft_atoi(todie);
 	input->to_eat = ft_atoi(toeat);
 	input->to_sleep = ft_atoi(tosleep);
+	if (input->opt_meals == 0)
+		input->opt_meals = -2;
 	return (0);
 }
 
@@ -47,6 +49,8 @@ int	main(int argc, char *argv[])
 		input->opt_meals = ft_atoi(argv[5]);
 	if (argv[5] != NULL && ft_atoi(argv[5]) == 0)
 		input->opt_meals = -1;
+	else
+		input->opt_meals = 0;
 	if (philosophers(input, argv[2], argv[3], argv[4]) == 1)
 		return (1);
 	return (0);

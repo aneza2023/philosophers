@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 14:49:04 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/04/10 17:01:30 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/04/17 12:43:48 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@
 
 typedef struct input_values
 {
-	int	philo;
+	int			philo;
 	suseconds_t	to_die;
-	int	to_eat;
-	int	to_sleep;
-	int	opt_meals;      // optional nb of meals;
+	int			to_eat;
+	int			to_sleep;
+	int			opt_meals;      // optional nb of meals;
 }	t_val;
 
 typedef struct philo_threads
@@ -38,14 +38,18 @@ typedef struct philo_threads
 	pthread_mutex_t	*rfork;
 	int				death;
 	t_val			*input;
-	int 			someone_died;
-	struct timeval 	start;
+	int				someone_died;
+	struct timeval	start;
 	suseconds_t		last_meal;
+	suseconds_t		to_die;
+	suseconds_t		to_eat;
+	suseconds_t		to_sleep;
+	int				opt_meals;
 }	t_philo;
 
 typedef struct observer
 {
-	t_philo 	**philosophers;
+	t_philo		**philosophers;
 	pthread_t	*philothread;
 }	t_observer;
 
@@ -60,7 +64,7 @@ int				creating_threads(t_val *input);
 void			*philosophers_routine(void *arg);
 //int				putting_values_to_philo(t_philo *philosopher);
 int				joining_threads(pthread_t *philo, t_philo **philosophers);
-suseconds_t		getting_timestamp(struct timeval original_time);
+suseconds_t		t_stamp(struct timeval original_time);
 int				start_with_even(t_philo *philosopher);
 int 			phil_eating(t_philo *phil);
 int 			phil_sleeping(t_philo *phil);

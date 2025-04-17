@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   check_for_input.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:29:16 by ahavrank          #+#    #+#             */
-/*   Updated: 2025/04/10 15:29:18 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/04/17 11:59:39 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int ft_atoi(char *str)
+int	ft_atoi(char *str)
 {
-	int i;
-	int sign;
-	int result;
+	int	i;
+	int	sign;
+	int	result;
 
 	i = 0;
 	sign = 1;
@@ -25,7 +25,7 @@ int ft_atoi(char *str)
 		i++;
 	if (str[i] == '-')
 	{
-		sign = sign * ( - 1);
+		sign = sign * (-1);
 		i++;
 	}
 	else if (str[i] == '+')
@@ -39,10 +39,10 @@ int ft_atoi(char *str)
 	return (result);
 }
 
-int check_for_input(char *argv, int id)
+int	check_for_input(char *argv, int id)
 {
-	int nb;
-	int i;
+	int	nb;
+	int	i;
 
 	i = 0;
 	nb = ft_atoi(argv);
