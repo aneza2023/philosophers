@@ -1,10 +1,11 @@
 NAME = philo
-SOURCES = endings.c\
+SOURCES = addition.c\
 			check_for_input.c\
 			observer.c\
 			philosophers.c\
 			routines.c\
-			threads.c
+			threads.c\
+
 
 OBJS = $(SOURCES:.c=.o)
 CC = cc

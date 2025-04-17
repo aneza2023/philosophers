@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 16:52:49 by ahavrank          #+#    #+#             */
-/*   Updated: 2025/04/17 20:09:39 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/04/17 20:26:18 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	check_for_death(t_observer *observer)
 				+ observer->philosophers[k]->input->to_die))
 		{
 			observer->philosophers[k]->death = 1;
-			printf("%ld %d died\n", t_stamp(observer->philosophers[k]->start),
+			printf("%d %d died\n", t_stamp(observer->philosophers[k]->start),
 				observer->philosophers[k]->id);
 			i = 0;
 			while (observer->philosophers[i] != NULL)
@@ -68,9 +68,6 @@ int	check_for_death(t_observer *observer)
 
 void	*observer_routine(void *arg)
 {
-	int			i;
-	int			k;
-	int			j;
 	t_observer	*observer;
 
 	observer = arg;
@@ -78,11 +75,11 @@ void	*observer_routine(void *arg)
 	while (1)
 	{
 		if (check_for_meals(observer) == 1)
-			return (0);
+			return (NULL);
 		if (check_for_death(observer) == 1)
-			return (1);
+			return (NULL);
 	}
-	return (0);
+	return (NULL);
 }
 
 // need to free stuff

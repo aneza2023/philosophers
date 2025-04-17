@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ww.c                                               :+:      :+:    :+:   */
+/*   addition.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:24:44 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/04/17 20:08:46 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/04/17 20:24:41 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ int	phil_last(t_philo *phil)
 	pthread_mutex_lock(phil->rfork);
 	if (phil->someone_died == 1 || phil->death == 1)
 		return (1);
-	printf("%ld %d has taken right fork\n", t_stamp(phil->start), phil->id);
+	printf("%d %d has taken right fork\n", t_stamp(phil->start), phil->id);
 	if (phil->rfork == phil->lfork)
 		return (0);
 	pthread_mutex_lock(phil->lfork);
 	if (phil->someone_died == 1 || phil->death == 1)
 		return (1);
-	printf("%ld %d has taken left fork\n", t_stamp(phil->start), phil->id);
+	printf("%d %d has taken left fork\n", t_stamp(phil->start), phil->id);
 	return (0);
 }
 
@@ -34,19 +34,19 @@ int	check_order_forks(t_philo *phil)
 		pthread_mutex_lock(phil->lfork);
 		if (phil->someone_died == 1 || phil->death == 1)
 			return (1);
-		printf("%ld %d has taken left fork\n", t_stamp(phil->start), phil->id);
+		printf("%d %d has taken left fork\n", t_stamp(phil->start), phil->id);
 		if (phil->rfork == phil->lfork)
 			return (0);
 		pthread_mutex_lock(phil->rfork);
 		if (phil->someone_died == 1 || phil->death == 1)
 			return (1);
-		printf("%ld %d has taken right fork\n", t_stamp(phil->start), phil->id);
+		printf("%d %d has taken right fork\n", t_stamp(phil->start), phil->id);
 	}
 	else if (phil->id == phil->input->philo)
 		phil_last(phil);
 	if (phil->someone_died == 1 || phil->death == 1)
 		return (1);
-	printf("%ld %d is eating\n", t_stamp(phil->start), phil->id);
+	printf("%d %d is eating\n", t_stamp(phil->start), phil->id);
 	return (0);
 }
 

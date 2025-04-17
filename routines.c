@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:55:19 by ahavrank          #+#    #+#             */
-/*   Updated: 2025/04/17 19:39:09 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/04/17 20:27:19 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	phil_sleeping(t_philo *phil)
 	{
 		if (phil->someone_died == 1 || phil->death == 1)
 			return (1);
-		printf("%ld %d is sleeping\n", t_stamp(phil->start), phil->id);
+		printf("%d %d is sleeping\n", t_stamp(phil->start), phil->id);
 		usleep(phil->to_sleep * 1000);
 	}
 	else if (phil->last_meal + phil->to_die
@@ -50,7 +50,7 @@ int	phil_sleeping(t_philo *phil)
 	{
 		if (phil->someone_died == 1 || phil->death == 1)
 			return (1);
-		printf("%ld %d is sleeping\n", t_stamp(phil->start), phil->id);
+		printf("%d %d is sleeping\n", t_stamp(phil->start), phil->id);
 		usleep(phil->to_die * 1000);
 	}
 	return (0);
@@ -61,7 +61,7 @@ int	continue_routine(t_philo *phil)
 	while (phil->opt_meals != -1 && phil->death != 1
 		&& phil->someone_died != 1 && phil->nb_of_meals != phil->opt_meals)
 	{
-		if ((phil->nb_of_meals == phil->opt_meals))
+		if (phil->nb_of_meals == phil->opt_meals)
 			break ;
 		phil_eating(phil);
 		if (phil->rfork == phil->lfork)
@@ -69,7 +69,7 @@ int	continue_routine(t_philo *phil)
 		phil_sleeping(phil);
 		if (phil->death != 1 && phil->someone_died != 1
 			&& phil->rfork != phil->lfork)
-			printf("%ld %d is thinking\n", t_stamp(phil->start), phil->id);
+			printf("%d %d is thinking\n", t_stamp(phil->start), phil->id);
 	}
 	return (0);
 }
@@ -83,7 +83,7 @@ int	start_with_even(t_philo *phil)
 			phil_eating(phil);
 			phil_sleeping(phil);
 			if (phil->death != 1 && phil->someone_died != 1)
-				printf("%ld %d is thinking\n", t_stamp(phil->start), phil->id);
+				printf("%d %d is thinking\n", t_stamp(phil->start), phil->id);
 		}
 		else
 		{
@@ -91,7 +91,7 @@ int	start_with_even(t_philo *phil)
 				return (1);
 			if (phil->rfork != phil->lfork)
 			{
-				printf("%ld %d is thinking\n", t_stamp(phil->start), phil->id);
+				printf("%d %d is thinking\n", t_stamp(phil->start), phil->id);
 				usleep((phil->to_eat / 2) * 1000);
 			}
 		}
