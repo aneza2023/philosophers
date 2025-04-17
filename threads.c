@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:54:51 by ahavrank          #+#    #+#             */
-/*   Updated: 2025/04/17 12:43:48 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/04/17 15:19:42 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,8 @@ suseconds_t	t_stamp(struct timeval original_time)
 void	*philosophers_routine(void *arg)
 {
 	t_philo		*philosopher;
-	suseconds_t	current_time;
 
 	philosopher = (t_philo *)arg;
-	philosopher->nb_of_meals = 0;
-	philosopher->nb_of_sleep = 0;
-	philosopher->death = 0;
-	philosopher->someone_died = 0;
-	philosopher->to_die = philosopher->input->to_die;
-	philosopher->to_eat = philosopher->input->to_eat;
-	philosopher->to_sleep = philosopher->input->to_sleep;
-	philosopher->opt_meals = philosopher->input->opt_meals;
-	current_time = gettimeofday(&philosopher->start, NULL);
-	philosopher->last_meal = current_time;
 	start_with_even(philosopher);
 	return (NULL);
 }
@@ -79,6 +68,7 @@ int	creating_threads_cont(t_philo **philosopher, pthread_t *philo,
 			philosopher[i]->rfork = forks[i + 1];
 		if (i == input->philo - 1)
 			philosopher[i]->rfork = forks[0];
+		putting_val_phil(philosopher[i]);
 		pthread_create(&philo[i], NULL, philosophers_routine, philosopher[i]);
 		i++;
 	}

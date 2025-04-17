@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:29:16 by ahavrank          #+#    #+#             */
-/*   Updated: 2025/04/17 11:59:39 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/04/17 14:04:59 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ int	check_for_input(char *argv, int id)
 	if (nb <= 0 && id < 5)
 		return (1);
 	if (nb < 0 && id == 5)
-		return (1);
-	if ((nb == 1 && nb > 200) && id == 1) // might not put error, but phil died..
 		return (1);
 	while (argv[i] != '\0')
 	{

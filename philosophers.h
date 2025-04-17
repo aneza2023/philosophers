@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 14:49:04 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/04/17 12:43:48 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/04/17 15:20:26 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct input_values
 	suseconds_t	to_die;
 	int			to_eat;
 	int			to_sleep;
-	int			opt_meals;      // optional nb of meals;
+	int			opt_meals;
 }	t_val;
 
 typedef struct philo_threads
@@ -62,7 +62,7 @@ int				ft_atoi(char *argv);
 int				putting_values(t_val *input, char *todie, char *toeat, char *tosleep);
 int				creating_threads(t_val *input);
 void			*philosophers_routine(void *arg);
-//int				putting_values_to_philo(t_philo *philosopher);
+int				putting_val_phil(t_philo *philosopher);
 int				joining_threads(pthread_t *philo, t_philo **philosophers);
 suseconds_t		t_stamp(struct timeval original_time);
 int				start_with_even(t_philo *philosopher);

@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:25:50 by ahavrank          #+#    #+#             */
-/*   Updated: 2025/04/17 12:15:51 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/04/17 14:01:19 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,14 @@ int	main(int argc, char *argv[])
 	input->philo = ft_atoi(argv[1]);
 	if (argv[5] != NULL && ft_atoi(argv[5]) != 0)
 		input->opt_meals = ft_atoi(argv[5]);
-	if (argv[5] != NULL && ft_atoi(argv[5]) == 0)
-		input->opt_meals = -1;
+	else if (argv[5] != NULL && ft_atoi(argv[5]) == 0)
+		return (0);
 	else
 		input->opt_meals = 0;
 	if (philosophers(input, argv[2], argv[3], argv[4]) == 1)
 		return (1);
 	return (0);
 }
+
+// for input, could be changed based on requirements
+// input->opt_meals = -1, pokud nb of meals 0 >> confusion
