@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:54:51 by ahavrank          #+#    #+#             */
-/*   Updated: 2025/04/17 15:19:42 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/04/17 19:40:12 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	joining_threads(pthread_t *philo, t_philo **philosophers)
 	}
 	return (1);
 }
+//free needed if allocation failed
 
 int	creating_threads_cont(t_philo **philosopher, pthread_t *philo,
 	pthread_mutex_t **forks, t_val *input)
@@ -57,11 +58,11 @@ int	creating_threads_cont(t_philo **philosopher, pthread_t *philo,
 	pthread_mutex_init(forks[i], NULL);
 	while (i < input->philo)
 	{
-		philosopher[i] = malloc(sizeof(t_philo));  //free needed, allocation failed
+		philosopher[i] = malloc(sizeof(t_philo));
 		memset(philosopher[i], 0, sizeof(t_philo));
 		philosopher[i]->id = i + 1;
 		philosopher[i]->input = input;
-		forks[i + 1] = malloc(sizeof(pthread_mutex_t)); //free needed if allocation failed
+		forks[i + 1] = malloc(sizeof(pthread_mutex_t));
 		pthread_mutex_init(forks[i + 1], NULL);
 		philosopher[i]->lfork = forks[i];
 		if (i != input->philo - 1)
