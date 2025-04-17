@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:55:19 by ahavrank          #+#    #+#             */
-/*   Updated: 2025/04/17 15:20:03 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/04/17 15:31:22 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,20 @@
 
 int	phil_eating(t_philo *phil)
 {
-	pthread_mutex_lock(phil->lfork);
-	if (phil->someone_died == 1 || phil->death == 1)
-		return (1);
-	printf("%ld %d has taken left fork\n", t_stamp(phil->start), phil->id);
-	if (phil->rfork == phil->lfork)
-		return (0);
-	pthread_mutex_lock(phil->rfork);
-	if (phil->someone_died == 1 || phil->death == 1)
-		return (1);
-	printf("%ld %d has taken right fork\n", t_stamp(phil->start), phil->id);
-	if (phil->someone_died == 1 || phil->death == 1)
-		return (1);
-	printf("%ld %d is eating\n", t_stamp(phil->start), phil->id);
+	check_order_forks(phil);
+	// pthread_mutex_lock(phil->lfork);
+	// if (phil->someone_died == 1 || phil->death == 1)
+	// 	return (1);
+	// printf("%ld %d has taken left fork\n", t_stamp(phil->start), phil->id);
+	// if (phil->rfork == phil->lfork)
+	// 	return (0);
+	// pthread_mutex_lock(phil->rfork);
+	// if (phil->someone_died == 1 || phil->death == 1)
+	// 	return (1);
+	// printf("%ld %d has taken right fork\n", t_stamp(phil->start), phil->id);
+	// if (phil->someone_died == 1 || phil->death == 1)
+	// 	return (1);
+	// printf("%ld %d is eating\n", t_stamp(phil->start), phil->id);
 	phil->last_meal = t_stamp(phil->start); // doesnt make sense to me, but should make sense to eval sheet, whatever ->to_eat
 	// for that reason this bullshit
 	if (phil->last_meal + phil->to_die <= t_stamp(phil->start) + phil->to_eat)

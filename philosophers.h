@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 14:49:04 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/04/17 15:20:26 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/04/17 15:31:42 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int 			phil_eating(t_philo *phil);
 int 			phil_sleeping(t_philo *phil);
 int 			phil_death(t_philo *phil);
 int 			continue_routine(t_philo *phil);
+int				check_order_forks(t_philo *phil);
 int				creating_threads_cont(t_philo **philosopher, pthread_t *philo, pthread_mutex_t **forks, t_val *input);
 
 
