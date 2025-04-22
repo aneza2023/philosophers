@@ -85,14 +85,14 @@ int				allocating_first_fork(t_philo **philosopher, pthread_t *philo,
 int				phil_last(t_philo *phil);
 int				help_ftusleep();
 int				ft_usleep(int milisec);
+int				adding_forks(t_philo **philosopher, pthread_mutex_t **forks, int id);
 
 //observer
 int				creating_observer(t_philo **philosophers, pthread_t *philo);
 void			*observer_routine(void *arg);
 
 // free stuff
-int				free_forks(t_philo **philosopher, pthread_t *philo,
-    				pthread_mutex_t **forks, int id);
+int				free_forks(t_philo **philosopher, pthread_mutex_t **forks, int id);
 int				free_philosopher(t_philo **philosopher, pthread_t *philo,
 					pthread_mutex_t **forks, int id);
 

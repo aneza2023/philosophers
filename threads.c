@@ -57,19 +57,14 @@ int	creating_threads(t_philo **philosopher, pthread_t *philo,
 	{
 		philosopher[i] = malloc(sizeof(t_philo));
 		if (philosopher[i] == NULL)
+		{
 			free_philosopher(philosopher, philo, forks, i);
+			return (1);
+		}
 		memset(philosopher[i], 0, sizeof(t_philo));
-		philosopher[i]->id = i + 1;
 		philosopher[i]->input = input;
-		forks[i + 1] = malloc(sizeof(pthread_mutex_t));
-		if (forks == NULL)
-			free_forks(philosopher, philo, forks, i);
-		pthread_mutex_init(forks[i + 1], NULL);
-		philosopher[i]->lfork = forks[i];
-		if (i != input->philo - 1)
-			philosopher[i]->rfork = forks[i + 1];
-		if (i == input->philo - 1)
-			philosopher[i]->rfork = forks[0];
+		if (adding_forks(philosopher, forks, i) == 1)
+			return (free(philo), 1);
 		putting_val_phil(philosopher[i]);
 		pthread_create(&philo[i], NULL, philosophers_routine, philosopher[i]);
 		i++;
@@ -100,7 +95,8 @@ int	allocate_for_threads(t_val *input)
 		free(philo);
 		return (1);
 	}
-	allocating_first_fork(philosopher, philo, forks, input);
+	if (allocating_first_fork(philosopher, philo, forks, input) == 1)
+		return (1);
 	joining_threads(philo, philosopher);
 	return (0);
 }

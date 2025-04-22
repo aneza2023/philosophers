@@ -86,7 +86,8 @@ int allocating_first_fork(t_philo **philosopher, pthread_t *philo,
 		return (1);
 	}
 	pthread_mutex_init(forks[i], NULL);
-	creating_threads(philosopher, philo, forks, input);
+	if (creating_threads(philosopher, philo, forks, input) == 1)
+		return (1);
 	return (0);
 }
 
