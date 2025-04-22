@@ -65,7 +65,7 @@ int	creating_threads(t_philo **philosopher, pthread_t *philo,
 		philosopher[i]->input = input;
 		if (adding_forks(philosopher, forks, i) == 1)
 			return (free(philo), 1);
-		putting_val_phil(philosopher[i]);
+		putting_val_phil(philosopher[i]); //last issue with memory + observer
 		pthread_create(&philo[i], NULL, philosophers_routine, philosopher[i]);
 		i++;
 	}
