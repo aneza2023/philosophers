@@ -33,6 +33,7 @@ typedef struct philo_threads
 {
 	int				id;
 	int				nb_of_meals;
+	pthread_mutex_t	*lock_nb_meals;
 	int				nb_of_sleep;
 	pthread_mutex_t	*lfork;
 	pthread_mutex_t	*rfork;
@@ -45,12 +46,13 @@ typedef struct philo_threads
 	suseconds_t		to_eat;
 	suseconds_t		to_sleep;
 	int				opt_meals;
+	pthread_mutex_t	*lock_opt_meals;
 }	t_philo;
 
 typedef struct observer
 {
 	t_philo		**philosophers;
-	pthread_t	*philothread;
+	pthread_t	*philothread; // probably because of nb of lines needs to add nb of philo / checked in observer, lock would take too much space
 }	t_observer;
 
 //check

@@ -20,6 +20,8 @@ int	check_for_meals(t_observer *observer)
 	i = 0;
 	while (observer->philosophers[i] != NULL)
 	{
+		pthread_mutex_lock(observer->philosophers[i]->lock_nb_meals);
+		pthread_mutex_lock(observer->philosophers[i]->lock_opt_meals);
 		if (observer->philosophers[i]->nb_of_meals
 			== observer->philosophers[i]->opt_meals)
 		{
@@ -32,6 +34,8 @@ int	check_for_meals(t_observer *observer)
 					return (1);
 			}
 		}
+		pthread_mutex_unlock(observer->philosophers[i]->lock_nb_meals);
+		pthread_mutex_unlock(observer->philosophers[i]->lock_opt_meals);
 		i++;
 	}
 	return (0);

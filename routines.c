@@ -104,14 +104,22 @@ int	putting_val_phil(t_philo *philosopher)
 {
 	suseconds_t	current_time;
 
+	philosopher->lock_nb_meals = malloc(sizeof(pthread_mutex_t));
+	philosopher->lock_opt_meals = malloc(sizeof(pthread_mutex_t));
+	pthread_mutex_init(philosopher->lock_nb_meals, NULL);
+	pthread_mutex_lock(philosopher->lock_nb_meals);
 	philosopher->nb_of_meals = 0;
+	pthread_mutex_unlock(philosopher->lock_nb_meals);
 	philosopher->nb_of_sleep = 0;
 	philosopher->death = 0;
 	philosopher->someone_died = 0;
 	philosopher->to_die = philosopher->input->to_die;
 	philosopher->to_eat = philosopher->input->to_eat;
 	philosopher->to_sleep = philosopher->input->to_sleep;
+	pthread_mutex_init(philosopher->lock_opt_meals, NULL);
+	pthread_mutex_lock(philosopher->lock_opt_meals);
 	philosopher->opt_meals = philosopher->input->opt_meals;
+	pthread_mutex_unlock(philosopher->lock_opt_meals);
 	current_time = gettimeofday(&philosopher->start, NULL);
 	philosopher->last_meal = current_time;
 	return (0);

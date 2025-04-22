@@ -62,7 +62,7 @@ int	creating_threads_cont(t_philo **philosopher, pthread_t *philo,
 		memset(philosopher[i], 0, sizeof(t_philo));
 		philosopher[i]->id = i + 1;
 		philosopher[i]->input = input;
-		forks[i + 1] = malloc(sizeof(pthread_mutex_t));
+		forks[i + 1] = malloc(sizeof(pthread_mutex_t)); // check failure
 		pthread_mutex_init(forks[i + 1], NULL);
 		philosopher[i]->lfork = forks[i];
 		if (i != input->philo - 1)
