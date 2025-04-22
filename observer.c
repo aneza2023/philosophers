@@ -78,7 +78,7 @@ void	*observer_routine(void *arg)
 	usleep((observer->philosophers[0]->input->to_die / 2) * 1000);
 	while (1)
 	{
-		if (check_for_meals(observer) == 1)
+		if (check_for_meals(observer) == 1) // ok mutaxes
 			return (NULL);
 		if (check_for_death(observer) == 1)
 			return (NULL);

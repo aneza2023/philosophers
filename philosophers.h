@@ -32,16 +32,21 @@ typedef struct input_values
 typedef struct philo_threads
 {
 	int				id;
+	pthread_mutex_t	*lock_some_died; // add
 	int				nb_of_meals;
 	pthread_mutex_t	*lock_nb_meals;
 	int				nb_of_sleep;
 	pthread_mutex_t	*lfork;
 	pthread_mutex_t	*rfork;
 	int				death;
+	pthread_mutex_t	*lock_death; // add
 	t_val			*input;
+	pthread_mutex_t	*lock_input; // add
 	int				someone_died;
 	struct timeval	start;
+	pthread_mutex_t	*lock_start; // add;
 	suseconds_t		last_meal;
+	pthread_mutex_t	*lock_last_meal; // add
 	suseconds_t		to_die;
 	suseconds_t		to_eat;
 	suseconds_t		to_sleep;
@@ -62,7 +67,7 @@ int				ft_atoi(char *argv);
 //philo
 int				putting_values(t_val *input, char *todie,
 					char *toeat, char *tosleep);
-int				creating_threads(t_val *input);
+int				allocate_for_threads(t_val *input);
 void			*philosophers_routine(void *arg);
 int				putting_val_phil(t_philo *philosopher);
 int				joining_threads(pthread_t *philo, t_philo **philosophers);
@@ -73,7 +78,9 @@ int				phil_sleeping(t_philo *phil);
 int				phil_death(t_philo *phil);
 int				continue_routine(t_philo *phil);
 int				check_order_forks(t_philo *phil);
-int				creating_threads_cont(t_philo **philosopher, pthread_t *philo,
+int				creating_threads(t_philo **philosopher, pthread_t *philo,
+					pthread_mutex_t **forks, t_val *input);
+int				allocating_first_fork(t_philo **philosopher, pthread_t *philo,
 					pthread_mutex_t **forks, t_val *input);
 int				phil_last(t_philo *phil);
 int				help_ftusleep();
@@ -82,5 +89,11 @@ int				ft_usleep(int milisec);
 //observer
 int				creating_observer(t_philo **philosophers, pthread_t *philo);
 void			*observer_routine(void *arg);
+
+// free stuff
+int				free_forks(t_philo **philosopher, pthread_t *philo,
+    				pthread_mutex_t **forks, int id);
+int				free_philosopher(t_philo **philosopher, pthread_t *philo,
+					pthread_mutex_t **forks, int id);
 
 #endif

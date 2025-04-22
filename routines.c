@@ -103,6 +103,7 @@ int	start_with_even(t_philo *phil)
 int	putting_val_phil(t_philo *philosopher)
 {
 	suseconds_t	current_time;
+// philosopher, forks, alocated, philo
 
 	philosopher->lock_nb_meals = malloc(sizeof(pthread_mutex_t));
 	philosopher->lock_opt_meals = malloc(sizeof(pthread_mutex_t));

@@ -25,7 +25,7 @@ int	putting_values(t_val *input, char *todie, char *toeat, char *tosleep)
 int	philosophers(t_val *input, char *todie, char *toeat, char *tosleep)
 {
 	putting_values(input, todie, toeat, tosleep);
-	creating_threads(input);
+	allocate_for_threads(input);
 	return (0);
 }
 

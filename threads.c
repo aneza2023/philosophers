@@ -46,23 +46,24 @@ int	joining_threads(pthread_t *philo, t_philo **philosophers)
 	}
 	return (1);
 }
-//free needed if allocation failed
 
-int	creating_threads_cont(t_philo **philosopher, pthread_t *philo,
+int	creating_threads(t_philo **philosopher, pthread_t *philo,
 	pthread_mutex_t **forks, t_val *input)
 {
 	int	i;
 
 	i = 0;
-	forks[i] = malloc(sizeof(pthread_mutex_t));
-	pthread_mutex_init(forks[i], NULL);
 	while (i < input->philo)
 	{
 		philosopher[i] = malloc(sizeof(t_philo));
+		if (philosopher[i] == NULL)
+			free_philosopher(philosopher, philo, forks, i);
 		memset(philosopher[i], 0, sizeof(t_philo));
 		philosopher[i]->id = i + 1;
 		philosopher[i]->input = input;
-		forks[i + 1] = malloc(sizeof(pthread_mutex_t)); // check failure
+		forks[i + 1] = malloc(sizeof(pthread_mutex_t));
+		if (forks == NULL)
+			free_forks(philosopher, philo, forks, i);
 		pthread_mutex_init(forks[i + 1], NULL);
 		philosopher[i]->lfork = forks[i];
 		if (i != input->philo - 1)
@@ -77,7 +78,7 @@ int	creating_threads_cont(t_philo **philosopher, pthread_t *philo,
 	return (0);
 }
 
-int	creating_threads(t_val *input)
+int	allocate_for_threads(t_val *input)
 {
 	pthread_t		*philo;
 	t_philo			**philosopher;
@@ -99,7 +100,7 @@ int	creating_threads(t_val *input)
 		free(philo);
 		return (1);
 	}
-	creating_threads_cont(philosopher, philo, forks, input);
+	allocating_first_fork(philosopher, philo, forks, input);
 	joining_threads(philo, philosopher);
 	return (0);
 }
