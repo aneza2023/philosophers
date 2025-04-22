@@ -50,7 +50,7 @@ int	check_for_death(t_observer *observer)
 				+ observer->philosophers[k]->input->to_die))
 		{
 			observer->philosophers[k]->death = 1;
-			printf("%d %d died\n", t_stamp(observer->philosophers[k]->start),
+			printf("%ld %d died\n", t_stamp(observer->philosophers[k]->start),
 				observer->philosophers[k]->id);
 			i = 0;
 			while (observer->philosophers[i] != NULL)

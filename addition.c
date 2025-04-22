@@ -17,13 +17,13 @@ int	phil_last(t_philo *phil)
 	pthread_mutex_lock(phil->rfork);
 	if (phil->someone_died == 1 || phil->death == 1)
 		return (1);
-	printf("%d %d has taken right fork\n", t_stamp(phil->start), phil->id);
+	printf("%ld %d has taken right fork\n", t_stamp(phil->start), phil->id);
 	if (phil->rfork == phil->lfork)
 		return (0);
 	pthread_mutex_lock(phil->lfork);
 	if (phil->someone_died == 1 || phil->death == 1)
 		return (1);
-	printf("%d %d has taken left fork\n", t_stamp(phil->start), phil->id);
+	printf("%ld %d has taken left fork\n", t_stamp(phil->start), phil->id);
 	return (0);
 }
 
@@ -34,19 +34,41 @@ int	check_order_forks(t_philo *phil)
 		pthread_mutex_lock(phil->lfork);
 		if (phil->someone_died == 1 || phil->death == 1)
 			return (1);
-		printf("%d %d has taken left fork\n", t_stamp(phil->start), phil->id);
+		printf("%ld %d has taken left fork\n", t_stamp(phil->start), phil->id);
 		if (phil->rfork == phil->lfork)
 			return (0);
 		pthread_mutex_lock(phil->rfork);
 		if (phil->someone_died == 1 || phil->death == 1)
 			return (1);
-		printf("%d %d has taken right fork\n", t_stamp(phil->start), phil->id);
+		printf("%ld %d has taken right fork\n", t_stamp(phil->start), phil->id);
 	}
 	else if (phil->id == phil->input->philo)
 		phil_last(phil);
 	if (phil->someone_died == 1 || phil->death == 1)
 		return (1);
-	printf("%d %d is eating\n", t_stamp(phil->start), phil->id);
+	printf("%ld %d is eating\n", t_stamp(phil->start), phil->id);
+	return (0);
+}
+
+int	help_ftusleep()
+{
+	struct timeval	current;
+	int			start;
+
+	gettimeofday(&current, NULL);
+	start = current.tv_sec * 1000 + current.tv_usec / 1000;
+	return (start);
+}
+
+int	ft_usleep(int milisec)
+{
+	int	start;
+	int	target_sleep;
+
+	start = help_ftusleep();
+	target_sleep = start + milisec;
+	while (help_ftusleep() < target_sleep)
+		usleep(milisec/100);
 	return (0);
 }
 

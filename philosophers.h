@@ -74,6 +74,8 @@ int				check_order_forks(t_philo *phil);
 int				creating_threads_cont(t_philo **philosopher, pthread_t *philo,
 					pthread_mutex_t **forks, t_val *input);
 int				phil_last(t_philo *phil);
+int				help_ftusleep();
+int				ft_usleep(int milisec);
 
 //observer
 int				creating_observer(t_philo **philosophers, pthread_t *philo);
