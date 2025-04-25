@@ -41,10 +41,8 @@ typedef struct philo_threads
 	int				death;
 	pthread_mutex_t	*lock_death; // add
 	t_val			*input;
-	pthread_mutex_t	*lock_input; // add
 	int				someone_died;
 	struct timeval	start;
-	pthread_mutex_t	*lock_start; // add;
 	suseconds_t		last_meal;
 	pthread_mutex_t	*lock_last_meal; // add
 	suseconds_t		to_die;

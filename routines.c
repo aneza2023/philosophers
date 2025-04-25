@@ -21,11 +21,13 @@
 int	phil_eating(t_philo *phil)
 {
 	check_order_forks(phil);
+	pthread_mutex_lock(phil->lock_last_meal);
 	phil->last_meal = t_stamp(phil->start);
 	if (phil->last_meal + phil->to_die <= t_stamp(phil->start) + phil->to_eat)
 		usleep(phil->to_die * 1000);
 	if (phil->last_meal + phil->to_die > t_stamp(phil->start) + phil->to_eat)
 		usleep(phil->to_eat * 1000);
+	pthread_mutex_unlock(phil->lock_last_meal);
 	pthread_mutex_lock(phil->lock_nb_meals);
 	phil->nb_of_meals++;
 	pthread_mutex_unlock(phil->lock_nb_meals);
@@ -40,16 +42,20 @@ int	phil_sleeping(t_philo *phil)
 		return (0);
 	if (phil->someone_died == 1 || phil->death == 1)
 		return (1);
+	pthread_mutex_lock(phil->lock_last_meal);
 	if (phil->last_meal + phil->to_die > t_stamp(phil->start) + phil->to_sleep)
 	{
+		pthread_mutex_unlock(phil->lock_last_meal);
 		if (phil->someone_died == 1 || phil->death == 1)
 			return (1);
 		printf("%ld %d is sleeping\n", t_stamp(phil->start), phil->id);
 		usleep(phil->to_sleep * 1000);
 	}
+	pthread_mutex_lock(phil->lock_last_meal);
 	else if (phil->last_meal + phil->to_die
 		<= t_stamp(phil->start) + phil->to_sleep)
 	{
+		pthread_mutex_unlock(phil->lock_last_meal);
 		if (phil->someone_died == 1 || phil->death == 1)
 			return (1);
 		printf("%ld %d is sleeping\n", t_stamp(phil->start), phil->id);
@@ -114,23 +120,24 @@ int	putting_val_phil(t_philo *philosopher)
 	suseconds_t	current_time;
 // philosopher, forks, alocated, philo
 
+ //might need separete function for allocation of locks
 	philosopher->lock_nb_meals = malloc(sizeof(pthread_mutex_t));
-	//philosopher->lock_opt_meals = malloc(sizeof(pthread_mutex_t));
+	philosopher->lock_last_meal = malloc(sizeof(pthread_mutex_t));
 	pthread_mutex_init(philosopher->lock_nb_meals, NULL);
 	pthread_mutex_lock(philosopher->lock_nb_meals);
 	philosopher->nb_of_meals = 0;
 	pthread_mutex_unlock(philosopher->lock_nb_meals);
 	philosopher->nb_of_sleep = 0;
-	philosopher->death = 0;
-	philosopher->someone_died = 0;
+	philosopher->death = 0; //mutex add
+	philosopher->someone_died = 0; //mutex add
 	philosopher->to_die = philosopher->input->to_die;
 	philosopher->to_eat = philosopher->input->to_eat;
 	philosopher->to_sleep = philosopher->input->to_sleep;
-	//pthread_mutex_init(philosopher->lock_opt_meals, NULL);
-	//pthread_mutex_lock(philosopher->lock_opt_meals);
 	philosopher->opt_meals = philosopher->input->opt_meals;
-	//pthread_mutex_unlock(philosopher->lock_opt_meals);
 	current_time = gettimeofday(&philosopher->start, NULL);
+	pthread_mutex_init(philosopher->lock_last_meal, NULL);
+	pthread_mutex_lock(philosopher->lock_last_meal);
 	philosopher->last_meal = current_time;
+	pthread_mutex_unlock(philosopher->lock_last_meal);
 	return (0);
 }
