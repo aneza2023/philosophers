@@ -60,10 +60,10 @@ int	phil_sleeping(t_philo *phil)
 
 int	continue_routine(t_philo *phil)
 {
-	pthread_mutex_lock(phil->lock_nb_meals);
 	while (phil->opt_meals != -1 && phil->death != 1
-		&& phil->someone_died != 1 && phil->nb_of_meals != phil->opt_meals)
+		&& phil->someone_died != 1 /* && phil->nb_of_meals != phil->opt_meals */)
 	{
+		pthread_mutex_lock(phil->lock_nb_meals);
 		if (phil->nb_of_meals == phil->opt_meals)
 			break ;
 		pthread_mutex_unlock(phil->lock_nb_meals);
@@ -103,6 +103,8 @@ int	start_with_even(t_philo *phil)
 	continue_routine(phil);
 	return (0);
 }
+
+//before creating threads, should be ok >> mutaxes
 
 int	putting_val_phil(t_philo *philosopher)
 {

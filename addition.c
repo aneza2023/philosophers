@@ -50,36 +50,38 @@ int	check_order_forks(t_philo *phil)
 	return (0);
 }
 
-int	help_ftusleep()
-{
-	struct timeval	current;
-	int			start;
+// works but probably needs an upgrade, still delayed
 
-	gettimeofday(&current, NULL);
-	start = (current.tv_sec * 1000000) + current.tv_usec;
-	return (start);
-}
+// int	help_ftusleep()
+// {
+// 	struct timeval	current;
+// 	int			start;
 
-int	ft_usleep(int microsec)
-{
-	int	start;
-	int	target_sleep;
-	int	remains;
+// 	gettimeofday(&current, NULL);
+// 	start = (current.tv_sec * 1000000) + current.tv_usec;
+// 	return (start);
+// }
 
-	start = help_ftusleep();
-	while (help_ftusleep() - start < microsec)
-	{
-		remains = microsec - (help_ftusleep() - start);
-		if (remains > 10000)
-			usleep (remains / 2);
-		else
-		{
-			while (remains > 0)
-				remains = microsec - (help_ftusleep() - start);
-		}
-	}
-	return (0);
-}
+// int	ft_usleep(int microsec)
+// {
+// 	int	start;
+// 	int	target_sleep;
+// 	int	remains;
+
+// 	start = help_ftusleep();
+// 	while (help_ftusleep() - start < microsec)
+// 	{
+// 		remains = microsec - (help_ftusleep() - start);
+// 		if (remains > 10000)
+// 			usleep (remains / 2);
+// 		else
+// 		{
+// 			while (remains > 0)
+// 				remains = microsec - (help_ftusleep() - start);
+// 		}
+// 	}
+// 	return (0);
+// }
 
 int allocating_first_fork(t_philo **philosopher, pthread_t *philo,
 	pthread_mutex_t **forks, t_val *input)
