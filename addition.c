@@ -56,21 +56,31 @@ int	help_ftusleep()
 	int			start;
 
 	gettimeofday(&current, NULL);
-	start = current.tv_sec * 1000 + current.tv_usec / 1000;
+	start = (current.tv_sec * 1000000) + current.tv_usec;
 	return (start);
 }
 
-int	ft_usleep(int milisec)
+int	ft_usleep(int microsec)
 {
 	int	start;
 	int	target_sleep;
+	int	remains;
 
 	start = help_ftusleep();
-	target_sleep = start + milisec;
-	while (help_ftusleep() < target_sleep)
-		usleep(milisec/100);
+	while (help_ftusleep() - start < microsec)
+	{
+		remains = microsec - (help_ftusleep() - start);
+		if (remains > 10000)
+			usleep (remains / 2);
+		else
+		{
+			while (remains > 0)
+				remains = microsec - (help_ftusleep() - start);
+		}
+	}
 	return (0);
 }
+
 int allocating_first_fork(t_philo **philosopher, pthread_t *philo,
 	pthread_mutex_t **forks, t_val *input)
 {

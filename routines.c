@@ -26,7 +26,9 @@ int	phil_eating(t_philo *phil)
 		usleep(phil->to_die * 1000);
 	if (phil->last_meal + phil->to_die > t_stamp(phil->start) + phil->to_eat)
 		usleep(phil->to_eat * 1000);
+	pthread_mutex_lock(phil->lock_nb_meals);
 	phil->nb_of_meals++;
+	pthread_mutex_unlock(phil->lock_nb_meals);
 	pthread_mutex_unlock(phil->lfork);
 	pthread_mutex_unlock(phil->rfork);
 	return (0);
@@ -58,11 +60,13 @@ int	phil_sleeping(t_philo *phil)
 
 int	continue_routine(t_philo *phil)
 {
+	pthread_mutex_lock(phil->lock_nb_meals);
 	while (phil->opt_meals != -1 && phil->death != 1
 		&& phil->someone_died != 1 && phil->nb_of_meals != phil->opt_meals)
 	{
 		if (phil->nb_of_meals == phil->opt_meals)
 			break ;
+		pthread_mutex_unlock(phil->lock_nb_meals);
 		phil_eating(phil);
 		if (phil->rfork == phil->lfork)
 			return (1);
@@ -106,7 +110,7 @@ int	putting_val_phil(t_philo *philosopher)
 // philosopher, forks, alocated, philo
 
 	philosopher->lock_nb_meals = malloc(sizeof(pthread_mutex_t));
-	philosopher->lock_opt_meals = malloc(sizeof(pthread_mutex_t));
+	//philosopher->lock_opt_meals = malloc(sizeof(pthread_mutex_t));
 	pthread_mutex_init(philosopher->lock_nb_meals, NULL);
 	pthread_mutex_lock(philosopher->lock_nb_meals);
 	philosopher->nb_of_meals = 0;
@@ -117,10 +121,10 @@ int	putting_val_phil(t_philo *philosopher)
 	philosopher->to_die = philosopher->input->to_die;
 	philosopher->to_eat = philosopher->input->to_eat;
 	philosopher->to_sleep = philosopher->input->to_sleep;
-	pthread_mutex_init(philosopher->lock_opt_meals, NULL);
-	pthread_mutex_lock(philosopher->lock_opt_meals);
+	//pthread_mutex_init(philosopher->lock_opt_meals, NULL);
+	//pthread_mutex_lock(philosopher->lock_opt_meals);
 	philosopher->opt_meals = philosopher->input->opt_meals;
-	pthread_mutex_unlock(philosopher->lock_opt_meals);
+	//pthread_mutex_unlock(philosopher->lock_opt_meals);
 	current_time = gettimeofday(&philosopher->start, NULL);
 	philosopher->last_meal = current_time;
 	return (0);
