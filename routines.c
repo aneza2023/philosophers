@@ -60,24 +60,27 @@ int	phil_sleeping(t_philo *phil)
 
 int	continue_routine(t_philo *phil)
 {
+	pthread_mutex_lock(phil->lock_nb_meals);
 	while (phil->opt_meals != -1 && phil->death != 1
-		&& phil->someone_died != 1 /* && phil->nb_of_meals != phil->opt_meals */)
+		&& phil->someone_died != 1 && phil->nb_of_meals != phil->opt_meals)
 	{
-		pthread_mutex_lock(phil->lock_nb_meals);
-		if (phil->nb_of_meals == phil->opt_meals)
-			break ;
+		// if (phil->nb_of_meals == phil->opt_meals)
+		// 	break ;
 		pthread_mutex_unlock(phil->lock_nb_meals);
 		phil_eating(phil);
+		pthread_mutex_lock(phil->lock_nb_meals); //necessary??
 		if (phil->rfork == phil->lfork)
 			return (1);
 		phil_sleeping(phil);
 		if (phil->death != 1 && phil->someone_died != 1
 			&& phil->rfork != phil->lfork)
 			printf("%ld %d is thinking\n", t_stamp(phil->start), phil->id);
+		pthread_mutex_unlock(phil->lock_nb_meals); //necessary??
 	}
 	return (0);
 }
 
+// issue with one meal
 int	start_with_even(t_philo *phil)
 {
 	if (phil->opt_meals != -1 && phil->death != 1 && phil->someone_died != 1)
