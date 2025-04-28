@@ -71,7 +71,7 @@ int	creating_threads(t_philo **philosopher, pthread_t *philo,
 		i++;
 	}
 	if (creating_observer(philosopher, philo) == 1) 
-		return (1); // finish error management
+		return (1);
 	return (0);
 }
 

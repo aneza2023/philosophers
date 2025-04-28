@@ -113,7 +113,6 @@ int	start_with_even(t_philo *phil)
 }
 
 // //before creating threads, should be ok >> mutaxes
-
 int	putting_val_phil(t_philo *philosopher)
 {
 	if (locking_nb_of_meals(philosopher) == 1)
