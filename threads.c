@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:54:51 by ahavrank          #+#    #+#             */
-/*   Updated: 2025/04/17 19:40:12 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/04/28 22:39:06 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	*philosophers_routine(void *arg)
 	t_philo		*philosopher;
 
 	philosopher = (t_philo *)arg;
-	start_with_even(philosopher);
+	if (start_with_even(philosopher) == 1)
+		return (NULL);
 	return (NULL);
 }
 

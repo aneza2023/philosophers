@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:55:19 by ahavrank          #+#    #+#             */
-/*   Updated: 2025/04/17 20:27:19 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/04/28 22:37:05 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 int	phil_eating(t_philo *phil)
 {
 	if (check_order_forks(phil) == 1)
-		return (0);
+		return (1);
 	pthread_mutex_lock(phil->lock_last_meal);
 	phil->last_meal = t_stamp(phil->start);
 	if (phil->last_meal + phil->to_die <= t_stamp(phil->start) + phil->to_eat)
@@ -54,7 +54,8 @@ int	phil_sleeping(t_philo *phil)
 	if (phil->last_meal + phil->to_die > t_stamp(phil->start) + phil->to_sleep)
 	{
 		pthread_mutex_unlock(phil->lock_last_meal);
-		proper_sleep(phil);
+		if (proper_sleep(phil) == 1)
+			return (1);
 	}
 	else if (phil->last_meal + phil->to_die
 		<= t_stamp(phil->start) + phil->to_sleep)
@@ -78,10 +79,12 @@ int	continue_routine(t_philo *phil)
 	{
 		pthread_mutex_unlock(phil->lock_nb_meals);
 		pthread_mutex_unlock(phil->lock_somedeath);
-		phil_eating(phil);
+		if (phil_eating(phil) == 1)
+			return (1);
 		if (phil->rfork == phil->lfork)
-			return (0);
-		phil_sleeping(phil);
+			return (1);
+		if (phil_sleeping(phil) == 1)
+			return (1);
 		pthread_mutex_lock(phil->lock_somedeath);
 		if (phil->someone_died != 1 && phil->rfork != phil->lfork)
 			printf("%ld %d is thinking\n", t_stamp(phil->start), phil->id);
@@ -98,8 +101,10 @@ int	start_with_even(t_philo *phil)
 		pthread_mutex_unlock(phil->lock_somedeath);
 		if (phil->id % 2 == 0)
 		{
-			phil_eating(phil);
-			phil_sleeping(phil);
+			if (phil_eating(phil) == 1)
+				return (1);
+			if (phil_sleeping(phil) == 1)
+				return (1);
 		}
 		pthread_mutex_lock(phil->lock_somedeath);
 		if (phil->someone_died != 1 && phil->rfork != phil->lfork)

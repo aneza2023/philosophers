@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:24:44 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/04/17 20:24:41 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/04/28 22:33:01 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,30 +31,40 @@ int	phil_last(t_philo *phil)
 	return (0);
 }
 
+int	phil_not_last(t_philo *phil)
+{
+	pthread_mutex_lock(phil->lfork);
+	pthread_mutex_lock(phil->lock_somedeath);
+	if (phil->someone_died == 1)
+		return (1);
+	pthread_mutex_unlock(phil->lock_somedeath);
+	printf("%ld %d has taken left fork\n", t_stamp(phil->start), phil->id);
+	if (phil->rfork == phil->lfork)
+		return (1);
+	pthread_mutex_lock(phil->rfork);
+	pthread_mutex_lock(phil->lock_somedeath);
+	if (phil->someone_died == 1)
+		return (1);
+	pthread_mutex_unlock(phil->lock_somedeath);
+	printf("%ld %d has taken right fork\n", t_stamp(phil->start), phil->id);
+	return (0);
+}
+
 int	check_order_forks(t_philo *phil)
 {
 	if (phil->id != phil->philo_nb)
 	{
-		pthread_mutex_lock(phil->lfork);
-		pthread_mutex_lock(phil->lock_somedeath);
-		if (phil->someone_died == 1)
-			return (0);
-		pthread_mutex_unlock(phil->lock_somedeath);
-		printf("%ld %d has taken left fork\n", t_stamp(phil->start), phil->id);
-		if (phil->rfork == phil->lfork)
-			return (0);
-		pthread_mutex_lock(phil->rfork);
-		pthread_mutex_lock(phil->lock_somedeath);
-		if (phil->someone_died == 1)
-			return (0);
-		pthread_mutex_unlock(phil->lock_somedeath);
-		printf("%ld %d has taken right fork\n", t_stamp(phil->start), phil->id);
+		if (phil_not_last(phil) == 1)
+			return (1);
 	}
 	else if (phil->id == phil->philo_nb)
-		phil_last(phil);
+	{
+		if (phil_last(phil) == 1)
+			return (1);
+	}
 	pthread_mutex_lock(phil->lock_somedeath);
 	if (phil->someone_died == 1)
-		return (0);
+		return (1);
 	pthread_mutex_unlock(phil->lock_somedeath);
 	printf("%ld %d is eating\n", t_stamp(phil->start), phil->id);
 	return (0);
