@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:55:19 by ahavrank          #+#    #+#             */
-/*   Updated: 2025/04/28 22:37:05 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/04/28 23:21:26 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	phil_sleeping(t_philo *phil)
 	}
 	return (0);
 }
-
+// spatne >> seg fault zde!! po pridani mutaxes
 int	continue_routine(t_philo *phil)
 {
 	pthread_mutex_lock(phil->lock_nb_meals);
@@ -87,9 +87,16 @@ int	continue_routine(t_philo *phil)
 			return (1);
 		pthread_mutex_lock(phil->lock_somedeath);
 		if (phil->someone_died != 1 && phil->rfork != phil->lfork)
+		{
 			printf("%ld %d is thinking\n", t_stamp(phil->start), phil->id);
-		pthread_mutex_unlock(phil->lock_somedeath);
+			pthread_mutex_unlock(phil->lock_somedeath);
+			usleep(1000);
+			pthread_mutex_lock(phil->lock_somedeath);
+		}
+		pthread_mutex_lock(phil->nb_of_meals);
 	}
+	pthread_mutex_unlock(phil->lock_somedeath);
+	pthread_mutex_unlock(phil->lock_nb_meals);
 	return (0);
 }
 
