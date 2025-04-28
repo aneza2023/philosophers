@@ -32,19 +32,21 @@ typedef struct input_values
 typedef struct philo_threads
 {
 	int				id;
-	pthread_mutex_t	*lock_some_died; // add
+	pthread_mutex_t	*lock_some_died; // in process
 	int				nb_of_meals;
-	pthread_mutex_t	*lock_nb_meals;
+	pthread_mutex_t	*lock_nb_meals; // in process
 	int				nb_of_sleep;
 	pthread_mutex_t	*lfork;
 	pthread_mutex_t	*rfork;
 	int				death;
 	pthread_mutex_t	*lock_death; // add
 	t_val			*input;
+	int				philo_nb;
 	int				someone_died;
+	pthread_mutex_t	*lock_somedeath;
 	struct timeval	start;
 	suseconds_t		last_meal;
-	pthread_mutex_t	*lock_last_meal; // add
+	pthread_mutex_t	*lock_last_meal; // in process
 	suseconds_t		to_die;
 	suseconds_t		to_eat;
 	suseconds_t		to_sleep;
@@ -84,6 +86,7 @@ int				phil_last(t_philo *phil);
 int				help_ftusleep();
 int				ft_usleep(int milisec);
 int				adding_forks(t_philo **philosopher, pthread_mutex_t **forks, int id);
+int				proper_sleep(t_philo *phil);
 
 //observer
 int				creating_observer(t_philo **philosophers, pthread_t *philo);
@@ -93,5 +96,10 @@ void			*observer_routine(void *arg);
 int				free_forks(t_philo **philosopher, pthread_mutex_t **forks, int id);
 int				free_philosopher(t_philo **philosopher, pthread_t *philo,
 					pthread_mutex_t **forks, int id);
+
+//mutaxes
+int				locking_nb_of_meals(t_philo *philosopher);
+int				locking_last_meal(t_philo *philosopher);
+int				locking_someone_died(t_philo *philosopher);
 
 #endif

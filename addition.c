@@ -15,40 +15,74 @@
 int	phil_last(t_philo *phil)
 {
 	pthread_mutex_lock(phil->rfork);
-	if (phil->someone_died == 1 || phil->death == 1)
-		return (1);
+	pthread_mutex_lock(phil->lock_somedeath);
+	if (phil->someone_died == 1)
+		return (0);
+	pthread_mutex_unlock(phil->lock_somedeath);
 	printf("%ld %d has taken right fork\n", t_stamp(phil->start), phil->id);
 	if (phil->rfork == phil->lfork)
 		return (0);
 	pthread_mutex_lock(phil->lfork);
-	if (phil->someone_died == 1 || phil->death == 1)
-		return (1);
+	pthread_mutex_lock(phil->lock_somedeath);
+	if (phil->someone_died == 1)
+		return (0);
+	pthread_mutex_unlock(phil->lock_somedeath);
 	printf("%ld %d has taken left fork\n", t_stamp(phil->start), phil->id);
 	return (0);
 }
 
 int	check_order_forks(t_philo *phil)
 {
-	if (phil->id != phil->input->philo)
+	if (phil->id != phil->philo_nb)
 	{
 		pthread_mutex_lock(phil->lfork);
-		if (phil->someone_died == 1 || phil->death == 1)
-			return (1);
+		pthread_mutex_lock(phil->lock_somedeath);
+		if (phil->someone_died == 1)
+			return (0);
+		pthread_mutex_unlock(phil->lock_somedeath);
 		printf("%ld %d has taken left fork\n", t_stamp(phil->start), phil->id);
 		if (phil->rfork == phil->lfork)
 			return (0);
 		pthread_mutex_lock(phil->rfork);
-		if (phil->someone_died == 1 || phil->death == 1)
-			return (1);
+		pthread_mutex_lock(phil->lock_somedeath);
+		if (phil->someone_died == 1)
+			return (0);
+		pthread_mutex_unlock(phil->lock_somedeath);
 		printf("%ld %d has taken right fork\n", t_stamp(phil->start), phil->id);
 	}
-	else if (phil->id == phil->input->philo)
+	else if (phil->id == phil->philo_nb)
 		phil_last(phil);
-	if (phil->someone_died == 1 || phil->death == 1)
-		return (1);
+	pthread_mutex_lock(phil->lock_somedeath);
+	if (phil->someone_died == 1)
+		return (0);
+	pthread_mutex_unlock(phil->lock_somedeath);
 	printf("%ld %d is eating\n", t_stamp(phil->start), phil->id);
 	return (0);
 }
+
+int	proper_sleep(t_philo *phil)
+{
+	pthread_mutex_lock(phil->lock_somedeath);
+	if (phil->someone_died == 1 || phil->death == 1)
+		return (1);
+	pthread_mutex_unlock(phil->lock_somedeath);
+	printf("%ld %d is sleeping\n", t_stamp(phil->start), phil->id);
+	usleep(phil->to_sleep * 1000);
+	return (0);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // works but probably needs an upgrade, still delayed
 

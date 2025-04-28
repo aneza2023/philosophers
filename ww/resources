@@ -26,4 +26,80 @@ cant use exit();
 cc *.c -lpthread
 for some reason need to include
 
+// int	start_with_even(t_philo *phil)
+// {
+// 	pthread_mutex_lock(phil->lock_somedeath);
+// 	if (phil->opt_meals != -1 && phil->someone_died != 1)
+// 	{
+// 		pthread_mutex_unlock(phil->lock_somedeath);
+// 		if (phil->id % 2 == 0)
+// 		{
+// 			phil_eating(phil);
+// 			phil_sleeping(phil);
+// 			pthread_mutex_lock(phil->lock_somedeath);
+// 			if (phil->someone_died != 1)
+// 				printf("%ld %d is thinking\n", t_stamp(phil->start), phil->id);
+// 			pthread_mutex_unlock(phil->lock_somedeath);
+// 		}
+// 		else
+// 		{
+// 			if (phil->someone_died == 1)
+// 				return (1);
+// 			if (phil->rfork != phil->lfork)
+// 			{
+// 				printf("%ld %d is thinking\n", t_stamp(phil->start), phil->id);
+// 				usleep((phil->to_eat / 2) * 1000);
+// 			}
+// 		}
+// 	}
+// 	pthread_mutex_unlock(phil->lock_somedeath);
+// 	continue_routine(phil);
+// 	return (0);
+// }
 
+// int	phil_eating(t_philo *phil)
+// {
+// 	check_order_forks(phil);
+// 	pthread_mutex_lock(phil->lock_last_meal);
+// 	phil->last_meal = t_stamp(phil->start);
+// 	if (phil->last_meal + phil->to_die <= t_stamp(phil->start) + phil->to_eat)
+// 		usleep(phil->to_die * 1000);
+// 	if (phil->last_meal + phil->to_die > t_stamp(phil->start) + phil->to_eat)
+// 		usleep(phil->to_eat * 1000);
+// 	pthread_mutex_unlock(phil->lock_last_meal);
+// 	pthread_mutex_lock(phil->lock_nb_meals);
+// 	phil->nb_of_meals++;
+// 	pthread_mutex_unlock(phil->lock_nb_meals);
+// 	pthread_mutex_unlock(phil->lfork);
+// 	pthread_mutex_unlock(phil->rfork);
+// 	return (0);
+// }
+
+
+// int	phil_sleeping(t_philo *phil)
+// {
+// 	if (phil->rfork == phil->lfork)
+// 		return (0);
+// 	if (phil->someone_died == 1 || phil->death == 1)
+// 		return (1);
+// 	pthread_mutex_lock(phil->lock_last_meal);
+// 	if (phil->last_meal + phil->to_die > t_stamp(phil->start) + phil->to_sleep)
+// 	{
+// 		//pthread_mutex_unlock(phil->lock_last_meal);
+// 		if (phil->someone_died == 1 || phil->death == 1)
+// 			return (1);
+// 		printf("%ld %d is sleeping\n", t_stamp(phil->start), phil->id);
+// 		usleep(phil->to_sleep * 1000);
+// 	}
+// 	//pthread_mutex_lock(phil->lock_last_meal);
+// 	else if (phil->last_meal + phil->to_die
+// 		<= t_stamp(phil->start) + phil->to_sleep)
+// 	{
+// 		pthread_mutex_unlock(phil->lock_last_meal);
+// 		if (phil->someone_died == 1 || phil->death == 1)
+// 			return (1);
+// 		printf("%ld %d is sleeping\n", t_stamp(phil->start), phil->id);
+// 		usleep(phil->to_die * 1000);
+// 	}
+// 	return (0);
+// }

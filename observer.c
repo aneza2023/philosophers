@@ -12,6 +12,14 @@
 
 #include "philosophers.h"
 
+int	someone_died(t_philo *philo)
+{
+	pthread_mutex_lock(philo->lock_somedeath);
+	philo->someone_died = 1;
+	pthread_mutex_lock(philo->lock_somedeath);
+	return (0);
+}
+
 int	check_for_meals(t_observer *observer)
 {
 	int	i;
@@ -21,7 +29,6 @@ int	check_for_meals(t_observer *observer)
 	while (observer->philosophers[i] != NULL)
 	{
 		pthread_mutex_lock(observer->philosophers[i]->lock_nb_meals);
-		//pthread_mutex_lock(observer->philosophers[i]->lock_opt_meals);
 		if (observer->philosophers[i]->nb_of_meals
 			== observer->philosophers[i]->opt_meals)
 		{
@@ -30,12 +37,11 @@ int	check_for_meals(t_observer *observer)
 				== observer->philosophers[i]->opt_meals)
 			{
 				j++;
-				if (j == observer->philosophers[i]->input->philo)
+				if (j == observer->philosophers[i]->philo_nb)
 					return (1);
 			}
 		}
 		pthread_mutex_unlock(observer->philosophers[i]->lock_nb_meals);
-		//pthread_mutex_unlock(observer->philosophers[i]->lock_opt_meals);
 		i++;
 	}
 	return (0);
@@ -49,24 +55,22 @@ int	check_for_death(t_observer *observer)
 	k = 0;
 	while (observer->philosophers[k] != NULL)
 	{
-		pthread_mutex_lock(observer->philosophers[i]->lock_last_meal);
+		pthread_mutex_lock(observer->philosophers[k]->lock_last_meal);
 		if (t_stamp(observer->philosophers[k]->start)
 			> (observer->philosophers[k]->last_meal
-				+ observer->philosophers[k]->input->to_die))
+				+ observer->philosophers[k]->to_die))
 		{
-			pthread_mutex_unlock(observer->philosophers[i]->lock_last_meal);
-			observer->philosophers[k]->death = 1;
 			printf("%ld %d died\n", t_stamp(observer->philosophers[k]->start),
 				observer->philosophers[k]->id);
-			i = 0;
+			i = 0; // could it be too slow, if philo dies >> for itself
 			while (observer->philosophers[i] != NULL)
 			{
-				observer->philosophers[i]->someone_died = 1;
-				printf("KKK\n");
+				someone_died(observer->philosophers[i]);
 				i++;
 			}
 			return (1);
 		}
+		pthread_mutex_unlock(observer->philosophers[k]->lock_last_meal);
 		k++;
 	}
 	return (0);
@@ -77,18 +81,16 @@ void	*observer_routine(void *arg)
 	t_observer	*observer;
 
 	observer = arg;
-	usleep((observer->philosophers[0]->input->to_die / 2) * 1000);
+	usleep((observer->philosophers[0]->input->to_die / 2) * 1000); //maybe optimize
 	while (1)
 	{
-		if (check_for_meals(observer) == 1) // ok mutaxes
+		if (check_for_meals(observer) == 1)
 			return (NULL);
 		if (check_for_death(observer) == 1)
 			return (NULL);
 	}
 	return (NULL);
 }
-
-// need to free stuff
 
 int	creating_observer(t_philo **philosophers, pthread_t *philo)
 {
