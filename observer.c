@@ -24,17 +24,18 @@ int	check_for_meals(t_observer *observer)
 {
 	static int	i;
 	int	j;
+	// might need to add to routines condition if nb meal ok >> unlock everything, otherwise issue with mutexes probably
 
 	pthread_mutex_lock(observer->philosophers[i]->lock_nb_meals);
-	if (observer->philosophers[i]->nb_of_meals
-		== observer->philosophers[i]->opt_meals)
+	if (observer->philosophers[0 + i]->nb_of_meals
+		== observer->philosophers[0]->opt_meals)
 	{
 		pthread_mutex_unlock(observer->philosophers[i]->lock_nb_meals);
 		i++;
 	}
 	else 
 		pthread_mutex_unlock(observer->philosophers[i]->lock_nb_meals);
-	if (i == observer->philosophers[0]->philo_nb - 1)
+	if (i >= observer->philosophers[0]->philo_nb - 1)
 	{
 		j = 0;
 		while (observer->philosophers[j] != NULL)
