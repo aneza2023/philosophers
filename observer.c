@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 16:52:49 by ahavrank          #+#    #+#             */
-/*   Updated: 2025/04/17 20:26:18 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/04/29 00:00:57 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,27 +22,30 @@ int	someone_died(t_philo *philo)
 
 int	check_for_meals(t_observer *observer)
 {
-	int	i;
+	static int	i;
 	int	j;
 
-	i = 0;
-	while (observer->philosophers[i] != NULL)
-	{
+//	i = 0;
+//	while (observer->philosophers[i] != NULL)
+//	{
 		pthread_mutex_lock(observer->philosophers[i]->lock_nb_meals);
 		if (observer->philosophers[i]->nb_of_meals
 			== observer->philosophers[i]->opt_meals)
 		{
-			j = 1;
-			while (observer->philosophers[j]->nb_of_meals
-				== observer->philosophers[i]->opt_meals)
-			{
-				j++;
-				if (j == observer->philosophers[i]->philo_nb)
-					return (1);
-			}
+			i++;
 		}
 		pthread_mutex_unlock(observer->philosophers[i]->lock_nb_meals);
-		i++;
+		//i++;
+//	}
+	if (i == observer->philosophers[0]->philo_nb - 1)
+	{
+		j = 0;
+		while (observer->philosophers[j] != NULL)
+		{
+			someone_died(observer->philosophers[j]);
+			j++;
+		}
+		return (1);
 	}
 	return (0);
 }
@@ -62,7 +65,7 @@ int	check_for_death(t_observer *observer)
 		{
 			printf("%ld %d died\n", t_stamp(observer->philosophers[k]->start),
 				observer->philosophers[k]->id);
-			i = 0; // could it be too slow, if philo dies >> for itself
+			i = 0;
 			while (observer->philosophers[i] != NULL)
 			{
 				someone_died(observer->philosophers[i]);
