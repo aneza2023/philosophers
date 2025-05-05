@@ -96,6 +96,7 @@ void			*observer_routine(void *arg);
 int				free_forks(t_philo **philosopher, pthread_mutex_t **forks, int id);
 int				free_philosopher(t_philo **philosopher, pthread_t *philo,
 					pthread_mutex_t **forks, int id);
+void    		free_finish(t_philo **phil, pthread_t *philos, pthread_mutex_t **forks, t_val *input);
 
 //mutaxes
 int				locking_nb_of_meals(t_philo *philosopher);

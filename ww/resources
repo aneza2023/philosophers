@@ -129,3 +129,61 @@ for some reason need to include
 // 	}
 // 	return (0);
 // }
+
+
+
+
+
+
+
+
+
+// void	*observer_routine(void *arg)
+// {
+// 	int			i;
+// 	int			k;
+// 	int			j;
+// 	t_observer	*observer;
+
+// 	observer = arg;
+// 	//condition until nb of meals reached
+// 	usleep((observer->philosophers[0]->input->to_die / 2) * 1000);
+// 	while (observer->philosophers[0]->someone_died != 1 && 1)
+// 	{
+// 		k = 0;
+// 		while (observer->philosophers[k] != NULL)
+// 		{
+// 			if (observer->philosophers[k]->nb_of_meals
+//				== observer->philosophers[k]->opt_meals)
+// 			{
+// 				j = 1;
+// 				while (observer->philosophers[j]->nb_of_meals
+//					== observer->philosophers[k]->opt_meals)
+// 				{
+// 					j++;
+// 					if (j == observer->philosophers[k]->input->philo)
+// 						return (0);
+// 				}
+// 			}
+// 			if (t_stamp(observer->philosophers[k]->start)
+//				> (observer->philosophers[k]->last_meal
+//					+ observer->philosophers[k]->input->to_die))
+// 			{
+// 				observer->philosophers[k]->death = 1;
+// 				printf("%ld %d died\n",
+//					t_stamp(observer->philosophers[k]->start),
+//					observer->philosophers[k]->id);
+// 				i = 0;
+// 				while (observer->philosophers[i] != NULL)
+// 				{
+// 					observer->philosophers[i]->someone_died = 1;
+// 					printf("KKK\n");
+// 					i++;
+// 				}
+// 				return (1);
+// 			}
+// 			k++;
+// 		}
+// 	}
+// 	return (0);
+// }

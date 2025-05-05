@@ -57,8 +57,35 @@ int	adding_forks(t_philo **philosopher, pthread_mutex_t **forks, int id)
 	return (0);
 }
 
+// works but probably needs an upgrade, still delayed
 
-// int	free_philo_values()
+// int	help_ftusleep()
 // {
+// 	struct timeval	current;
+// 	int			start;
 
+// 	gettimeofday(&current, NULL);
+// 	start = (current.tv_sec * 1000000) + current.tv_usec;
+// 	return (start);
+// }
+
+// int	ft_usleep(int microsec)
+// {
+// 	int	start;
+// 	int	target_sleep;
+// 	int	remains;
+
+// 	start = help_ftusleep();
+// 	while (help_ftusleep() - start < microsec)
+// 	{
+// 		remains = microsec - (help_ftusleep() - start);
+// 		if (remains > 10000)
+// 			usleep (remains / 2);
+// 		else
+// 		{
+// 			while (remains > 0)
+// 				remains = microsec - (help_ftusleep() - start);
+// 		}
+// 	}
+// 	return (0);
 // }

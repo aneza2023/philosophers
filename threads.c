@@ -67,12 +67,13 @@ int	creating_threads(t_philo **philosopher, pthread_t *philo,
 		if (adding_forks(philosopher, forks, i) == 1)
 			return (free(philo), 1);
 		if (putting_val_phil(philosopher[i]) == 1)
-			return (1);
+			return (free_finish(philosopher, philo, forks, input), 1);
 		pthread_create(&philo[i], NULL, philosophers_routine, philosopher[i]);
 		i++;
 	}
 	if (creating_observer(philosopher, philo) == 1) 
 		return (1);
+	free_finish(philosopher, philo, forks, input);
 	return (0);
 }
 
