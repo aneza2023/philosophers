@@ -17,15 +17,15 @@ int	phil_last(t_philo *phil)
 	pthread_mutex_lock(phil->rfork);
 	pthread_mutex_lock(phil->lock_somedeath);
 	if (phil->someone_died == 1)
-		return (free(phil), 1);
+		return (pthread_mutex_unlock(phil->lock_somedeath), 1);
 	pthread_mutex_unlock(phil->lock_somedeath);
 	printf("%ld %d has taken right fork\n", t_stamp(phil->start), phil->id);
 	if (phil->rfork == phil->lfork)
-		return (free(phil), 1);
+		return (1);
 	pthread_mutex_lock(phil->lfork);
 	pthread_mutex_lock(phil->lock_somedeath);
 	if (phil->someone_died == 1)
-		return (free(phil), 1);
+		return (pthread_mutex_unlock(phil->lock_somedeath), 1);
 	pthread_mutex_unlock(phil->lock_somedeath);
 	printf("%ld %d has taken left fork\n", t_stamp(phil->start), phil->id);
 	return (0);
@@ -36,15 +36,15 @@ int	phil_not_last(t_philo *phil)
 	pthread_mutex_lock(phil->lfork);
 	pthread_mutex_lock(phil->lock_somedeath);
 	if (phil->someone_died == 1)
-		return (free(phil), 1);
+		return (pthread_mutex_unlock(phil->lock_somedeath), 1);
 	pthread_mutex_unlock(phil->lock_somedeath);
 	printf("%ld %d has taken left fork\n", t_stamp(phil->start), phil->id);
 	if (phil->rfork == phil->lfork)
-		return (free(phil), 1);
+		return (1);
 	pthread_mutex_lock(phil->rfork);
 	pthread_mutex_lock(phil->lock_somedeath);
 	if (phil->someone_died == 1)
-		return (free(phil), 1);
+		return (pthread_mutex_unlock(phil->lock_somedeath), 1);
 	pthread_mutex_unlock(phil->lock_somedeath);
 	printf("%ld %d has taken right fork\n", t_stamp(phil->start), phil->id);
 	return (0);
@@ -64,7 +64,7 @@ int	check_order_forks(t_philo *phil)
 	}
 	pthread_mutex_lock(phil->lock_somedeath);
 	if (phil->someone_died == 1)
-		return (free(phil), 1);
+		return (pthread_mutex_unlock(phil->lock_somedeath), 1);
 	pthread_mutex_unlock(phil->lock_somedeath);
 	printf("%ld %d is eating\n", t_stamp(phil->start), phil->id);
 	return (0);
@@ -74,7 +74,7 @@ int	proper_sleep(t_philo *phil)
 {
 	pthread_mutex_lock(phil->lock_somedeath);
 	if (phil->someone_died == 1 || phil->death == 1)
-		return (1);
+		return (pthread_mutex_unlock(phil->lock_somedeath), 1);
 	pthread_mutex_unlock(phil->lock_somedeath);
 	printf("%ld %d is sleeping\n", t_stamp(phil->start), phil->id);
 	usleep(phil->to_sleep * 1000);
@@ -97,6 +97,10 @@ int allocating_first_fork(t_philo **philosopher, pthread_t *philo,
 	}
 	pthread_mutex_init(forks[i], NULL);
 	if (creating_threads(philosopher, philo, forks, input) == 1)
+	{
+		free(input);
 		return (1);
+	}
+	free(input);
 	return (0);
 }

@@ -105,5 +105,6 @@ int	creating_observer(t_philo **philosophers, pthread_t *philo)
 	observer->philothread = philo;
 	pthread_create(&observthread, NULL, observer_routine, observer);
 	pthread_join(observthread, NULL);
+	free(observer);
 	return (0);
 }
