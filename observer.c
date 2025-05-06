@@ -101,6 +101,7 @@ int	creating_observer(t_philo **philosophers, pthread_t *philo)
 	observer = malloc(sizeof(t_observer));
 	if (observer == NULL)
 		return (1);
+	philosophers[philosophers[0]->philo_nb] = NULL;
 	observer->philosophers = philosophers;
 	observer->philothread = philo;
 	pthread_create(&observthread, NULL, observer_routine, observer);

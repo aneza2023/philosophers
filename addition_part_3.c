@@ -5,6 +5,8 @@ void    free_finish(t_philo **phil, pthread_t *philos, pthread_mutex_t **forks)
     int i;
 
     i = 0;
+    forks[phil[0]->philo_nb + 1] = NULL;
+    phil[phil[0]->philo_nb] = NULL;
     while (forks[i] != NULL)
     {
         free(forks[i]);
