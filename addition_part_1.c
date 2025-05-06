@@ -21,7 +21,11 @@ int	phil_last(t_philo *phil)
 	pthread_mutex_unlock(phil->lock_somedeath);
 	printf("%ld %d has taken right fork\n", t_stamp(phil->start), phil->id);
 	if (phil->rfork == phil->lfork)
+	{
+		usleep(phil->to_die * 1000);
+		printf("%ld %d died\n", phil->to_die, phil->id);
 		return (1);
+	}
 	pthread_mutex_lock(phil->lfork);
 	pthread_mutex_lock(phil->lock_somedeath);
 	if (phil->someone_died == 1)

@@ -48,7 +48,7 @@ int	phil_sleeping(t_philo *phil)
 		return (1);
 	pthread_mutex_lock(phil->lock_somedeath);
 	if (phil->someone_died == 1)
-		return (1);
+		return (pthread_mutex_unlock(phil->lock_somedeath), 1);
 	pthread_mutex_unlock(phil->lock_somedeath);
 	pthread_mutex_lock(phil->lock_last_meal);
 	if (phil->last_meal + phil->to_die > t_stamp(phil->start) + phil->to_sleep)
@@ -63,7 +63,7 @@ int	phil_sleeping(t_philo *phil)
 		pthread_mutex_unlock(phil->lock_last_meal);
 		pthread_mutex_lock(phil->lock_somedeath);
 		if (phil->someone_died == 1 || phil->death == 1)
-			return (1);
+			return (pthread_mutex_unlock(phil->lock_somedeath), 1);
 		pthread_mutex_unlock(phil->lock_somedeath);
 		printf("%ld %d is sleeping\n", t_stamp(phil->start), phil->id);
 		usleep(phil->to_die * 1000);
