@@ -102,9 +102,9 @@ int allocating_first_fork(t_philo **philosopher, pthread_t *philo,
 	pthread_mutex_init(forks[i], NULL);
 	if (creating_threads(philosopher, philo, forks, input) == 1)
 	{
-		free(input);
+		//free(input);
 		return (1);
 	}
-	free(input);
+	//free(input);
 	return (0);
 }

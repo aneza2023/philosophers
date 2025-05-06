@@ -135,7 +135,7 @@ int	putting_val_phil(t_philo *philosopher)
 	if (locking_someone_died(philosopher) == 1)
 		return (1);
 	philosopher->nb_of_sleep = 0;
-	philosopher->death = 0; // maybe add mutex
+	philosopher->death = 0;
 	philosopher->nb_of_meals = 0;
 	philosopher->philo_nb = philosopher->input->philo;
 	philosopher->to_die = philosopher->input->to_die;

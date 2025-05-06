@@ -2,7 +2,9 @@
 
 int	locking_nb_of_meals(t_philo *philosopher)
 {
-	philosopher->lock_nb_meals = malloc(sizeof(pthread_mutex_t));
+	//philosopher->lock_nb_meals = malloc(sizeof(pthread_mutex_t));
+	philosopher->lock_nb_meals = NULL;
+	
 	if (philosopher->lock_nb_meals == NULL)
 		return (1);
 	pthread_mutex_init(philosopher->lock_nb_meals, NULL);
@@ -17,6 +19,8 @@ int	locking_last_meal(t_philo *philosopher)
 	suseconds_t	current_time;
 
 	philosopher->lock_last_meal = malloc(sizeof(pthread_mutex_t));
+	//philosopher->lock_last_meal = NULL;
+
 	if (philosopher->lock_last_meal == NULL)
 	{
 		free(philosopher->lock_nb_meals);

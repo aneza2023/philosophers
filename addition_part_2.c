@@ -14,6 +14,7 @@ int free_philosopher(t_philo **philosopher, pthread_t *philo,
     }
     free(philosopher);
     free(philo);
+    free(forks[0]);
     free(forks);
     return (0);
 }
@@ -23,13 +24,13 @@ int free_forks(t_philo **philosopher, pthread_mutex_t **forks, int id)
     int i;
 
     i = 0;
-    while (i < id)
+    while (i <= id)
     {
         free(philosopher[i]);
         i++;
     }
     free(philosopher);
-    i = 1;
+    i = 0;
     while (i <= id)
     {
         free(forks[i]);
@@ -42,7 +43,7 @@ int free_forks(t_philo **philosopher, pthread_mutex_t **forks, int id)
 int	adding_forks(t_philo **philosopher, pthread_mutex_t **forks, int id)
 {
 	forks[id + 1] = malloc(sizeof(pthread_mutex_t));
-	if (forks == NULL)
+	if (forks[id + 1] == NULL)
 	{
 		free_forks(philosopher, forks, id);
 		return (1);

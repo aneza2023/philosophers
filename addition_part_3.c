@@ -1,19 +1,21 @@
 #include "philosophers.h"
 
-void    free_finish(t_philo **phil, pthread_t *philos, pthread_mutex_t **forks)
+void    free_finish(t_philo **phil, pthread_t *philos, pthread_mutex_t **forks, int id)
 {
     int i;
 
     i = 0;
-    forks[phil[0]->philo_nb + 1] = NULL;
-    phil[phil[0]->philo_nb] = NULL;
-    while (forks[i] != NULL)
+    //forks[phil[0]->philo_nb + 1] = NULL;
+    // phil[phil[0]->philo_nb] = NULL;
+    while (i <= id)
     {
         free(forks[i]);
         i++;
     }
+    if (i != phil[0]->philo_nb)
+        free(forks[i + 1]);
     i = 0;
-    while (phil[i] != NULL)
+    while (i <= id)
     {
         free_mutaxes(phil[i]);
         free(phil[i]);

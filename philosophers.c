@@ -53,7 +53,8 @@ int	main(int argc, char *argv[])
 	else
 		input->opt_meals = 0;
 	if (philosophers(input, argv[2], argv[3], argv[4]) == 1)
-		return (1);
+		return (free(input), 1);
+	free(input);
 	return (0);
 }
 
