@@ -5,15 +5,11 @@ void    free_finish(t_philo **phil, pthread_t *philos, pthread_mutex_t **forks, 
     int i;
 
     i = 0;
-    //forks[phil[0]->philo_nb + 1] = NULL;
-    // phil[phil[0]->philo_nb] = NULL;
     while (i <= id + 1)
     {
         free(forks[i]);
         i++;
     }
-    // if (i != phil[0]->philo_nb)
-    //     free(forks[i + 1]);
     i = 0;
     while (i <= id)
     {

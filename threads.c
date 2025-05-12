@@ -57,9 +57,10 @@ int	creating_threads(t_philo **philosopher, pthread_t *philo,
 	while (i < input->philo)
 	{
 		philosopher[i] = malloc(sizeof(t_philo));
+		philosopher[1] = NULL;
 		if (philosopher[i] == NULL)
 		{
-			free_philosopher(philosopher, philo, forks, i);
+			free_philosopher(philosopher, philo, forks, (i));
 			return (1);
 		}
 		memset(philosopher[i], 0, sizeof(t_philo));
@@ -71,11 +72,10 @@ int	creating_threads(t_philo **philosopher, pthread_t *philo,
 		pthread_create(&philo[i], NULL, philosophers_routine, philosopher[i]);
 		i++;
 	}
-	printf ("%d", i);
-	if (creating_observer(philosopher, philo) == 1) 
-		return (free_finish(philosopher, philo, forks, (i - 1)), 1);
-	joining_threads(philo, philosopher);
-	free_finish(philosopher, philo, forks, i);
+	// if (creating_observer(philosopher, philo) == 1) 
+	// 	return (free_finish(philosopher, philo, forks, (i - 1)), 1);
+	// joining_threads(philo, philosopher);
+	free_finish(philosopher, philo, forks, i - 1);
 	return (0);
 }
 
