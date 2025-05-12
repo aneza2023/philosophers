@@ -98,7 +98,8 @@ int	creating_observer(t_philo **philosophers, pthread_t *philo)
 	t_observer	*observer;
 	pthread_t	observthread;
 
-	observer = malloc(sizeof(t_observer));
+	//observer = malloc(sizeof(t_observer));
+	observer = NULL;
 	if (observer == NULL)
 		return (1);
 	philosophers[philosophers[0]->philo_nb] = NULL;

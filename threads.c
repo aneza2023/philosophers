@@ -71,8 +71,9 @@ int	creating_threads(t_philo **philosopher, pthread_t *philo,
 		pthread_create(&philo[i], NULL, philosophers_routine, philosopher[i]);
 		i++;
 	}
+	printf ("%d", i);
 	if (creating_observer(philosopher, philo) == 1) 
-		return (1);
+		return (free_finish(philosopher, philo, forks, (i - 1)), 1);
 	joining_threads(philo, philosopher);
 	free_finish(philosopher, philo, forks, i);
 	return (0);

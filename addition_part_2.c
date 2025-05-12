@@ -14,7 +14,12 @@ int free_philosopher(t_philo **philosopher, pthread_t *philo,
     }
     free(philosopher);
     free(philo);
-    free(forks[0]);
+    i = 0;
+    while (i <= id)
+    {
+        free(forks[i]);
+        i++;
+    }
     free(forks);
     return (0);
 }

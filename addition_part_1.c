@@ -17,7 +17,10 @@ int	phil_last(t_philo *phil)
 	pthread_mutex_lock(phil->rfork);
 	pthread_mutex_lock(phil->lock_somedeath);
 	if (phil->someone_died == 1)
+	{
+		pthread_mutex_unlock(phil->rfork);
 		return (pthread_mutex_unlock(phil->lock_somedeath), 1);
+	}
 	pthread_mutex_unlock(phil->lock_somedeath);
 	printf("%ld %d has taken right fork\n", t_stamp(phil->start), phil->id);
 	if (phil->rfork == phil->lfork)
@@ -29,7 +32,10 @@ int	phil_last(t_philo *phil)
 	pthread_mutex_lock(phil->lfork);
 	pthread_mutex_lock(phil->lock_somedeath);
 	if (phil->someone_died == 1)
+	{
+		pthread_mutex_unlock(phil->lfork);
 		return (pthread_mutex_unlock(phil->lock_somedeath), 1);
+	}
 	pthread_mutex_unlock(phil->lock_somedeath);
 	printf("%ld %d has taken left fork\n", t_stamp(phil->start), phil->id);
 	return (0);
@@ -40,7 +46,10 @@ int	phil_not_last(t_philo *phil)
 	pthread_mutex_lock(phil->lfork);
 	pthread_mutex_lock(phil->lock_somedeath);
 	if (phil->someone_died == 1)
+	{
+		pthread_mutex_unlock(phil->lfork);
 		return (pthread_mutex_unlock(phil->lock_somedeath), 1);
+	}
 	pthread_mutex_unlock(phil->lock_somedeath);
 	printf("%ld %d has taken left fork\n", t_stamp(phil->start), phil->id);
 	if (phil->rfork == phil->lfork)
@@ -48,7 +57,10 @@ int	phil_not_last(t_philo *phil)
 	pthread_mutex_lock(phil->rfork);
 	pthread_mutex_lock(phil->lock_somedeath);
 	if (phil->someone_died == 1)
+	{
+		pthread_mutex_unlock(phil->rfork);
 		return (pthread_mutex_unlock(phil->lock_somedeath), 1);
+	}
 	pthread_mutex_unlock(phil->lock_somedeath);
 	printf("%ld %d has taken right fork\n", t_stamp(phil->start), phil->id);
 	return (0);
@@ -105,6 +117,6 @@ int allocating_first_fork(t_philo **philosopher, pthread_t *philo,
 		//free(input);
 		return (1);
 	}
-	//free(input);
+	//free(input); freeing now in main
 	return (0);
 }
