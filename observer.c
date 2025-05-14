@@ -95,17 +95,24 @@ void	*observer_routine(void *arg)
 
 int	creating_observer(t_philo **philosophers, pthread_t *philo)
 {
-	t_observer	*observer;
+    int i;
+    t_observer  *observer;
 	pthread_t	observthread;
 
-	observer = malloc(sizeof(t_observer));
-	//observer = NULL;
+    i = 0;
+    observer = malloc(sizeof(observer));
 	if (observer == NULL)
-		return (1);
+        return (1);
 	philosophers[philosophers[0]->philo_nb] = NULL;
 	observer->philosophers = philosophers;
 	observer->philothread = philo;
+    while(i < philosophers[0]->philo_nb)
+    {
+        pthread_create(&philo[i], NULL, philosophers_routine, philosophers[i]);
+        i++;
+    }
 	pthread_create(&observthread, NULL, observer_routine, observer);
+	joining_threads(philo, philosophers);
 	pthread_join(observthread, NULL);
 	free(observer);
 	return (0);
