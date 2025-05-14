@@ -32,6 +32,7 @@ int free_forks(t_philo **philosopher, pthread_mutex_t **forks, int id)
     i = 0;
     while (i <= id)
     {
+        free_mutaxes(philosopher[i]);
         free(philosopher[i]);
         i++;
     }
