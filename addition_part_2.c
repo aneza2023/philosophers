@@ -9,6 +9,7 @@ int free_philosopher(t_philo **philosopher, pthread_t *philo,
     i = 0;
     while (i < id)
     {
+        free_mutaxes(philosopher[i]);
         free(philosopher[i]);
         i++;
     }

@@ -19,6 +19,7 @@ int	locking_last_meal(t_philo *philosopher)
 	philosopher->lock_last_meal = malloc(sizeof(pthread_mutex_t));
 	if (philosopher->lock_last_meal == NULL)
 	{
+		pthread_mutex_destroy(philosopher->lock_nb_meals);
 		free(philosopher->lock_nb_meals);
 		philosopher->lock_nb_meals = NULL;
 		return (1);
@@ -36,8 +37,10 @@ int	locking_someone_died(t_philo *philosopher)
 	philosopher->lock_somedeath = malloc(sizeof(pthread_mutex_t));
 	if (philosopher->lock_somedeath == NULL)
 	{
+		pthread_mutex_destroy(philosopher->lock_nb_meals);
 		free(philosopher->lock_nb_meals);
 		philosopher->lock_nb_meals = NULL;
+		pthread_mutex_destroy(philosopher->lock_last_meal);
 		free(philosopher->lock_last_meal);
 		philosopher->lock_last_meal = NULL;
 		return (1);
