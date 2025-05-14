@@ -22,7 +22,7 @@ int	phil_last(t_philo *phil)
 		return (pthread_mutex_unlock(phil->lock_somedeath), 1);
 	}
 	pthread_mutex_unlock(phil->lock_somedeath);
-	printf("%ld %d has taken right fork\n", t_stamp(phil->start), phil->id);
+	printf("%ld %d has taken right fork\n", t_stamp(phil), phil->id);
 	if (phil->rfork == phil->lfork)
 	{
 		usleep(phil->to_die * 1000);
@@ -44,7 +44,7 @@ int phil_last_leftf(t_philo *phil)
 		return (pthread_mutex_unlock(phil->lock_somedeath), 1);
 	}
 	pthread_mutex_unlock(phil->lock_somedeath);
-	printf("%ld %d has taken left fork\n", t_stamp(phil->start), phil->id);
+	printf("%ld %d has taken left fork\n", t_stamp(phil), phil->id);
 	return (0);
 }
 
@@ -58,7 +58,7 @@ int	phil_not_last(t_philo *phil)
 		return (pthread_mutex_unlock(phil->lock_somedeath), 1);
 	}
 	pthread_mutex_unlock(phil->lock_somedeath);
-	printf("%ld %d has taken left fork\n", t_stamp(phil->start), phil->id);
+	printf("%ld %d has taken left fork\n", t_stamp(phil), phil->id);
 	if (phil->rfork == phil->lfork)
 		return (1);
 	pthread_mutex_lock(phil->rfork);
@@ -70,7 +70,7 @@ int	phil_not_last(t_philo *phil)
 		return (pthread_mutex_unlock(phil->lock_somedeath), 1);
 	}
 	pthread_mutex_unlock(phil->lock_somedeath);
-	printf("%ld %d has taken right fork\n", t_stamp(phil->start), phil->id);
+	printf("%ld %d has taken right fork\n", t_stamp(phil), phil->id);
 	return (0);
 }
 
@@ -90,8 +90,8 @@ int	check_order_forks(t_philo *phil)
 	if (phil->someone_died == 1)
 		return (pthread_mutex_unlock(phil->lock_somedeath), 1);
 	pthread_mutex_unlock(phil->lock_somedeath);
-	printf("%ld %d is eating\n", t_stamp(phil->start), phil->id);
-	return (0);
+	printf("%ld %d is eating\n", t_stamp(phil), phil->id);
+	return (0);	
 }
 
 int	proper_sleep(t_philo *phil)
@@ -100,7 +100,7 @@ int	proper_sleep(t_philo *phil)
 	if (phil->someone_died == 1 || phil->death == 1)
 		return (pthread_mutex_unlock(phil->lock_somedeath), 1);
 	pthread_mutex_unlock(phil->lock_somedeath);
-	printf("%ld %d is sleeping\n", t_stamp(phil->start), phil->id);
+	printf("%ld %d is sleeping\n", t_stamp(phil), phil->id);
 	usleep(phil->to_sleep * 1000);
 	return (0);
 }

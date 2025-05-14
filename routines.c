@@ -23,13 +23,13 @@ int	phil_eating(t_philo *phil)
 	if (check_order_forks(phil) == 1)
 		return (1);
 	pthread_mutex_lock(phil->lock_last_meal);
-	phil->last_meal = t_stamp(phil->start);
-	if (phil->last_meal + phil->to_die <= t_stamp(phil->start) + phil->to_eat)
+	phil->last_meal = t_stamp(phil);
+	if (phil->last_meal + phil->to_die <= t_stamp(phil) + phil->to_eat)
 	{
 		pthread_mutex_unlock(phil->lock_last_meal);
 		usleep(phil->to_die * 1000);
 	}
-	if (phil->last_meal + phil->to_die > t_stamp(phil->start) + phil->to_eat)
+	if (phil->last_meal + phil->to_die > t_stamp(phil) + phil->to_eat)
 	{
 		pthread_mutex_unlock(phil->lock_last_meal);
 		usleep(phil->to_eat * 1000);
@@ -51,21 +51,21 @@ int	phil_sleeping(t_philo *phil)
 		return (pthread_mutex_unlock(phil->lock_somedeath), 1);
 	pthread_mutex_unlock(phil->lock_somedeath);
 	pthread_mutex_lock(phil->lock_last_meal);
-	if (phil->last_meal + phil->to_die > t_stamp(phil->start) + phil->to_sleep)
+	if (phil->last_meal + phil->to_die > t_stamp(phil) + phil->to_sleep)
 	{
 		pthread_mutex_unlock(phil->lock_last_meal);
 		if (proper_sleep(phil) == 1)
 			return (1);
 	}
 	else if (phil->last_meal + phil->to_die
-		<= t_stamp(phil->start) + phil->to_sleep)
+		<= t_stamp(phil) + phil->to_sleep)
 	{
 		pthread_mutex_unlock(phil->lock_last_meal);
 		pthread_mutex_lock(phil->lock_somedeath);
 		if (phil->someone_died == 1 || phil->death == 1)
 			return (pthread_mutex_unlock(phil->lock_somedeath), 1);
 		pthread_mutex_unlock(phil->lock_somedeath);
-		printf("%ld %d is sleeping\n", t_stamp(phil->start), phil->id);
+		printf("%ld %d is sleeping\n", t_stamp(phil), phil->id);
 		usleep(phil->to_die * 1000);
 	}
 	return (0);
@@ -88,7 +88,7 @@ int	continue_routine(t_philo *phil)
 		pthread_mutex_lock(phil->lock_somedeath);
 		if (phil->someone_died != 1 && phil->rfork != phil->lfork)
 		{
-			printf("%ld %d is thinking\n", t_stamp(phil->start), phil->id);
+			printf("%ld %d is thinking\n", t_stamp(phil), phil->id);
 			pthread_mutex_unlock(phil->lock_somedeath);
 			usleep(1000);
 			pthread_mutex_lock(phil->lock_somedeath);
@@ -115,7 +115,7 @@ int	start_with_even(t_philo *phil)
 		}
 		pthread_mutex_lock(phil->lock_somedeath);
 		if (phil->someone_died != 1 && phil->rfork != phil->lfork)
-			printf("%ld %d is thinking\n", t_stamp(phil->start), phil->id);
+			printf("%ld %d is thinking\n", t_stamp(phil), phil->id);
 		pthread_mutex_unlock(phil->lock_somedeath);
 		if (phil->id % 2 != 0 && phil->rfork != phil->lfork)
 			usleep((phil->to_eat / 2) * 1000);
@@ -133,6 +133,8 @@ int	putting_val_phil(t_philo *philosopher)
 	if (locking_last_meal(philosopher) == 1)
 		return (1);
 	if (locking_someone_died(philosopher) == 1)
+		return (1);
+	if (locking_time(philosopher) == 1)
 		return (1);
 	philosopher->nb_of_sleep = 0;
 	philosopher->death = 0;

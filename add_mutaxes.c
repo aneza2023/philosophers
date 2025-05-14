@@ -51,3 +51,26 @@ int	locking_someone_died(t_philo *philosopher)
 	pthread_mutex_unlock(philosopher->lock_somedeath);
 	return (0);
 }
+
+int locking_time(t_philo *philosopher)
+{
+	philosopher->lock_time = malloc(sizeof(pthread_mutex_t));
+	if (philosopher->lock_time == NULL)
+	{
+		pthread_mutex_destroy(philosopher->lock_nb_meals);
+		free(philosopher->lock_nb_meals);
+		philosopher->lock_nb_meals = NULL;
+		pthread_mutex_destroy(philosopher->lock_last_meal);
+		free(philosopher->lock_last_meal);
+		philosopher->lock_last_meal = NULL;
+		pthread_mutex_destroy(philosopher->lock_somedeath);
+		free(philosopher->lock_somedeath);
+		philosopher->lock_somedeath = NULL;
+		return (1);
+	}
+	pthread_mutex_init(philosopher->lock_time, NULL);
+	// pthread_mutex_lock(philosopher->lock_time);
+	// philosopher->lock_time = 0;
+	// pthread_mutex_unlock(philosopher->lock_time);
+	return (0);
+}

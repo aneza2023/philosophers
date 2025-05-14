@@ -45,6 +45,7 @@ typedef struct philo_threads
 	int				someone_died;
 	pthread_mutex_t	*lock_somedeath;
 	struct timeval	start;
+	pthread_mutex_t	*lock_time;
 	suseconds_t		last_meal;
 	pthread_mutex_t	*lock_last_meal; // in process
 	suseconds_t		to_die;
@@ -71,7 +72,7 @@ int				allocate_for_threads(t_val *input);
 void			*philosophers_routine(void *arg);
 int				putting_val_phil(t_philo *philosopher);
 int				joining_threads(pthread_t *philo, t_philo **philosophers);
-suseconds_t		t_stamp(struct timeval original_time);
+suseconds_t		t_stamp(t_philo *philosopher);
 int				start_with_even(t_philo *philosopher);
 int				phil_eating(t_philo *phil);
 int				phil_sleeping(t_philo *phil);
@@ -104,5 +105,6 @@ void    		free_mutaxes(t_philo *phil);
 int				locking_nb_of_meals(t_philo *philosopher);
 int				locking_last_meal(t_philo *philosopher);
 int				locking_someone_died(t_philo *philosopher);
+int				locking_time(t_philo *philosopher);
 
 #endif

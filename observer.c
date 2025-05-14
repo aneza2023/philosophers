@@ -57,11 +57,11 @@ int	check_for_death(t_observer *observer)
 	while (observer->philosophers[k] != NULL)
 	{
 		pthread_mutex_lock(observer->philosophers[k]->lock_last_meal);
-		if (t_stamp(observer->philosophers[k]->start)
+		if (t_stamp(observer->philosophers[k])
 			> (observer->philosophers[k]->last_meal
 				+ observer->philosophers[k]->to_die))
 		{
-			printf("%ld %d died\n", t_stamp(observer->philosophers[k]->start),
+			printf("%ld %d died\n", t_stamp(observer->philosophers[k]),
 				observer->philosophers[k]->id);
 			i = 0;
 			while (observer->philosophers[i] != NULL)

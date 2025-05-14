@@ -12,13 +12,17 @@
 
 #include "philosophers.h"
 
-suseconds_t	t_stamp(struct timeval original_time)
+suseconds_t	t_stamp(t_philo *philosopher)
 {
 	struct timeval	current_time;
 	suseconds_t		result;
 	time_t			betweenres;
+	struct timeval	original_time;
 
+	original_time = philosopher->start;
+	pthread_mutex_lock(philosopher->lock_time);
 	gettimeofday(&current_time, NULL);
+	pthread_mutex_unlock(philosopher->lock_time);
 	betweenres = (current_time.tv_sec - original_time.tv_sec) * 1000;
 	result = (current_time.tv_usec - original_time.tv_usec) / 1000;
 	result = betweenres + result;
