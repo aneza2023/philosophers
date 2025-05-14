@@ -73,8 +73,8 @@ int	phil_sleeping(t_philo *phil)
 
 int	continue_routine(t_philo *phil)
 {
-	pthread_mutex_lock(phil->lock_nb_meals);
 	pthread_mutex_lock(phil->lock_somedeath);
+	pthread_mutex_lock(phil->lock_nb_meals);
 	while (phil->someone_died != 1 && phil->nb_of_meals != phil->opt_meals)
 	{
 		pthread_mutex_unlock(phil->lock_nb_meals);

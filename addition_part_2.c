@@ -63,6 +63,27 @@ int	adding_forks(t_philo **philosopher, pthread_mutex_t **forks, int id)
 	return (0);
 }
 
+int allocating_first_fork(t_philo **philosopher, pthread_t *philo,
+	pthread_mutex_t **forks, t_val *input)
+{
+	int	i;
+
+	i = 0;
+	forks[i] = malloc(sizeof(pthread_mutex_t));
+	if (forks[i] == NULL)
+	{
+		free(philosopher);
+		free(philo);
+		free(forks);
+		return (1);
+	}
+	pthread_mutex_init(forks[i], NULL);
+	if (creating_threads(philosopher, philo, forks, input) == 1)
+		return (1);
+	return (0);
+}
+
+
 // works but probably needs an upgrade, still delayed
 
 // int	help_ftusleep()

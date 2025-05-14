@@ -69,7 +69,7 @@ int	check_for_death(t_observer *observer)
 				someone_died(observer->philosophers[i]);
 				i++;
 			}
-			return (1);
+			return (pthread_mutex_unlock(observer->philosophers[k]->lock_last_meal), 1);
 		}
 		pthread_mutex_unlock(observer->philosophers[k]->lock_last_meal);
 		k++;

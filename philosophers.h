@@ -87,6 +87,7 @@ int				help_ftusleep();
 int				ft_usleep(int milisec);
 int				adding_forks(t_philo **philosopher, pthread_mutex_t **forks, int id);
 int				proper_sleep(t_philo *phil);
+int 			phil_last_leftf(t_philo *phil);
 
 //observer
 int				creating_observer(t_philo **philosophers, pthread_t *philo);

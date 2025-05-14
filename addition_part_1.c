@@ -29,10 +29,17 @@ int	phil_last(t_philo *phil)
 		printf("%ld %d died\n", phil->to_die, phil->id);
 		return (1);
 	}
+	phil_last_leftf(phil);
+	return (0);
+}
+
+int phil_last_leftf(t_philo *phil)
+{
 	pthread_mutex_lock(phil->lfork);
 	pthread_mutex_lock(phil->lock_somedeath);
 	if (phil->someone_died == 1)
 	{
+		pthread_mutex_unlock(phil->rfork);
 		pthread_mutex_unlock(phil->lfork);
 		return (pthread_mutex_unlock(phil->lock_somedeath), 1);
 	}
@@ -58,6 +65,7 @@ int	phil_not_last(t_philo *phil)
 	pthread_mutex_lock(phil->lock_somedeath);
 	if (phil->someone_died == 1)
 	{
+		pthread_mutex_unlock(phil->lfork);
 		pthread_mutex_unlock(phil->rfork);
 		return (pthread_mutex_unlock(phil->lock_somedeath), 1);
 	}
@@ -97,22 +105,3 @@ int	proper_sleep(t_philo *phil)
 	return (0);
 }
 
-int allocating_first_fork(t_philo **philosopher, pthread_t *philo,
-	pthread_mutex_t **forks, t_val *input)
-{
-	int	i;
-
-	i = 0;
-	forks[i] = malloc(sizeof(pthread_mutex_t));
-	if (forks[i] == NULL)
-	{
-		free(philosopher);
-		free(philo);
-		free(forks);
-		return (1);
-	}
-	pthread_mutex_init(forks[i], NULL);
-	if (creating_threads(philosopher, philo, forks, input) == 1)
-		return (1);
-	return (0);
-}
