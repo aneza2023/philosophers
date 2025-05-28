@@ -62,9 +62,6 @@ int	adding_mutex_time(t_philo **philosophers)
 	if (locking_time == NULL)
 		return (1);
 	pthread_mutex_init(locking_time, NULL);
-	pthread_mutex_lock(locking_time);
-	locking_time = 0;
-	pthread_mutex_unlock(locking_time);
 	while(i < philosophers[0]->philo_nb)
 	{
 		philosophers[i]->lock_time = locking_time;
