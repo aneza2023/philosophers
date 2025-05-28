@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 16:52:49 by ahavrank          #+#    #+#             */
-/*   Updated: 2025/04/29 00:00:57 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/05/28 22:17:47 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ int	creating_observer(t_philo **philosophers, pthread_t *philo)
 	philosophers[philosophers[0]->philo_nb] = NULL;
 	observer->philosophers = philosophers;
 	observer->philothread = philo;
+	if (adding_mutex_time(philosophers) == 1)
+		return (1);
     while(i < philosophers[0]->philo_nb)
     {
         pthread_create(&philo[i], NULL, philosophers_routine, philosophers[i]);

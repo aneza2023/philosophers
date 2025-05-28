@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 14:49:04 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/04/17 19:40:57 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/05/17 13:23:59 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,6 @@ int				locking_nb_of_meals(t_philo *philosopher);
 int				locking_last_meal(t_philo *philosopher);
 int				locking_someone_died(t_philo *philosopher);
 int				locking_time(t_philo *philosopher);
+int				adding_mutex_time(t_philo **philosophers);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:55:19 by ahavrank          #+#    #+#             */
-/*   Updated: 2025/04/28 23:58:08 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/05/17 13:24:38 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,8 @@ int	putting_val_phil(t_philo *philosopher)
 		return (1);
 	if (locking_someone_died(philosopher) == 1)
 		return (1);
-	if (locking_time(philosopher) == 1)
-		return (1);
+	// if (locking_time(philosopher) == 1)
+	// 	return (1);
 	philosopher->nb_of_sleep = 0;
 	philosopher->death = 0;
 	philosopher->nb_of_meals = 0;
