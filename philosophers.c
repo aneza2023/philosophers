@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:25:50 by ahavrank          #+#    #+#             */
-/*   Updated: 2025/04/17 14:01:19 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/05/30 18:02:38 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,16 @@ int	main(int argc, char *argv[])
 	t_val	*input;
 
 	if (argc <= 4 || argc >= 7)
-		return (write (1, "Error\n", 6), 1);
+		return (write (1, "invalid\n", 8), 1);
 	while (argc > 1)
 	{
 		if (check_for_input(argv[argc - 1], (argc - 1)) == 1)
-			return (write (1, "Error\n", 6), 1);
+			return (write (1, "invalid\n", 8), 1);
 		argc--;
 	}
 	input = malloc(sizeof(t_val));
 	if (input == NULL)
-		return (write (1, "Error\n", 6), 1);
+		return (write (1, "invalid\n", 8), 1);
 	input->philo = ft_atoi(argv[1]);
 	if (argv[5] != NULL && ft_atoi(argv[5]) != 0)
 		input->opt_meals = ft_atoi(argv[5]);

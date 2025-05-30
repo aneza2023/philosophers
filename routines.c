@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routines.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:55:19 by ahavrank          #+#    #+#             */
-/*   Updated: 2025/05/17 13:24:38 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/05/30 17:29:50 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	continue_routine(t_philo *phil)
 {
 	pthread_mutex_lock(phil->lock_somedeath);
 	pthread_mutex_lock(phil->lock_nb_meals);
-	while (phil->someone_died != 1 && phil->nb_of_meals != phil->opt_meals)
+	while (phil->someone_died != 1 /* && phil->nb_of_meals != phil->opt_meals */)
 	{
 		pthread_mutex_unlock(phil->lock_nb_meals);
 		pthread_mutex_unlock(phil->lock_somedeath);

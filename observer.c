@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   observer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 16:52:49 by ahavrank          #+#    #+#             */
-/*   Updated: 2025/05/28 22:17:47 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/05/30 18:09:06 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,10 @@ int	check_for_meals(t_observer *observer)
 {
 	static int	i;
 	int	j;
-	// might need to add to routines condition if nb meal ok >> unlock everything, otherwise issue with mutexes probably
 	
 	pthread_mutex_lock(observer->philosophers[i]->lock_nb_meals);
-	if (observer->philosophers[0 + i]->nb_of_meals
-		== observer->philosophers[0]->opt_meals)
+	if (observer->philosophers[0]->opt_meals != -2 && observer->philosophers[0 + i]->nb_of_meals
+		>= observer->philosophers[0]->opt_meals)
 	{
 		pthread_mutex_unlock(observer->philosophers[i]->lock_nb_meals);
 		i++;
