@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   observer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 16:52:49 by ahavrank          #+#    #+#             */
-/*   Updated: 2025/05/30 18:09:06 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/06/02 12:15:25 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,15 @@ int	check_for_death(t_observer *observer)
 			> (observer->philosophers[k]->last_meal
 				+ observer->philosophers[k]->to_die))
 		{
-			printf("%ld %d died\n", t_stamp(observer->philosophers[k]),
-				observer->philosophers[k]->id);
 			i = 0;
 			while (observer->philosophers[i] != NULL)
 			{
 				someone_died(observer->philosophers[i]);
 				i++;
 			}
+			usleep(100);
+			printf("%ld %d died\n", t_stamp(observer->philosophers[k]),
+				observer->philosophers[k]->id);
 			return (pthread_mutex_unlock(observer->philosophers[k]->lock_last_meal), 1);
 		}
 		pthread_mutex_unlock(observer->philosophers[k]->lock_last_meal);

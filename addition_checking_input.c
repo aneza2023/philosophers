@@ -6,9 +6,11 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 09:49:21 by codespace         #+#    #+#             */
-/*   Updated: 2025/06/02 09:50:46 by codespace        ###   ########.fr       */
+/*   Updated: 2025/06/02 09:54:47 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "philosophers.h"
 
 char	*ft_strdup(const char *s1)
 {
