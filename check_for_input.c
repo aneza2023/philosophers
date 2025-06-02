@@ -12,11 +12,11 @@
 
 #include "philosophers.h"
 
-int	ft_atoi(char *str)
+long int	ft_atoi(char *str)
 {
 	int	i;
 	int	sign;
-	int	result;
+	long int	result;
 
 	i = 0;
 	sign = 1;
@@ -39,13 +39,71 @@ int	ft_atoi(char *str)
 	return (result);
 }
 
+int	numb_int(int n)
+{
+	int	i;
+
+	i = 0;
+	if (n < 0)
+		i++;
+	while (n != 0)
+	{
+		n = n / 10;
+		i++;
+	}
+	return (i);
+}
+
+char	*ft_itoa(int n)
+{
+	char	*string;
+	int		i;
+
+	i = 0;
+	if (n == 0)
+		return (ft_strdup("0"));
+	if (n == -2147483648)
+		return (ft_strdup("-2147483648"));
+	string = malloc(numb_int(n) * sizeof(char) + 1);
+	if (string == NULL)
+		return (NULL);
+	if (n < 0)
+		string[i] = '-';
+	i = numb_int(n);
+	string[i] = '\0';
+	i--;
+	while (n != 0)
+	{
+		if (n < 0)
+			n = n * (-1);
+		string[i] = n % 10 + '0';
+		n = n / 10;
+		i--;
+	}
+	return (string);
+}
+
+int another_check(char *orig, long int nb)
+{
+	char *new;
+
+	new = ft_itoa(nb);
+	if (ft_strcmp(orig, new) != 0)
+		return (1);
+	return (0);
+}
+
 int	check_for_input(char *argv, int id)
 {
-	int	nb;
+	long int	nb;
 	int	i;
 
 	i = 0;
 	nb = ft_atoi(argv);
+	if (another_check(argv, nb) == 1)
+		return (1);
+	if (nb > 2147483647 || nb < -2147483648)
+		return (1);
 	if (nb <= 0 && id < 5)
 		return (1);
 	if (nb < 0 && id == 5)

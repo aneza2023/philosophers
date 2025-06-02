@@ -1,8 +1,9 @@
 NAME = philo
 SOURCES = 	add_mutaxes.c\
-			addition_part_1.c\
-			addition_part_2.c\
-			addition_part_3.c\
+			addition_checking_input.c\
+			addition_routine.c\
+			addition_freeing.c\
+			addition_freeing_pt2.c\
 			check_for_input.c\
 			observer.c\
 			philosophers.c\

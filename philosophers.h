@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <sys/time.h>
+# include <limits.h>
 
 typedef struct input_values
 {
@@ -63,7 +64,12 @@ typedef struct observer
 
 //check
 int				check_for_input(char *argv, int id);
-int				ft_atoi(char *argv);
+long int				ft_atoi(char *argv);
+char	*ft_strdup(const char *s1);
+char	*ft_itoa(int n);
+int	numb_int(int n);
+int	ft_strcmp(const char *s1, const char *s2);
+size_t	ft_strlen(const char *str);
 
 //philo
 int				putting_values(t_val *input, char *todie,
