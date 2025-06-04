@@ -3,5 +3,6 @@ die not last - ./philo 200 122 60 60
 int check - ./philo 9 18446744073709552016 100 100 5
 
 
-free if adding_time invalid
+free if adding_time invalid, adding activity invalid
 timestamp management
+change invalid to error

@@ -6,7 +6,7 @@
 /*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:55:19 by ahavrank          #+#    #+#             */
-/*   Updated: 2025/06/04 14:35:44 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/06/04 14:37:56 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,9 @@ int	continue_routine(t_philo *phil)
 		pthread_mutex_lock(phil->lock_somedeath);
 		if (phil->someone_died != 1 && phil->rfork != phil->lfork)
 		{
-			printf("%ld %d is thinking\n", t_stamp(phil), phil->id);
+			//printf("%ld %d is thinking\n", t_stamp(phil), phil->id);
 			pthread_mutex_unlock(phil->lock_somedeath);
+			printing_activity(phil, 3);
 			usleep(1000);
 			pthread_mutex_lock(phil->lock_somedeath);
 		}
