@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:54:51 by ahavrank          #+#    #+#             */
-/*   Updated: 2025/04/28 23:05:31 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/06/04 15:56:42 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@ int	allocate_for_threads(t_val *input)
 		free(philo);
 		return (1);
 	}
-	if (allocating_first_fork(philosopher, philo, forks, input) == 1)
-		return (1);
+	// if (allocating_first_fork(philosopher, philo, forks, input) == 1)
+	// 	return (1);
 //	joining_threads(philo, philosopher);
 	return (0);
 }

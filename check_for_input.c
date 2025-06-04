@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_for_input.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:29:16 by ahavrank          #+#    #+#             */
-/*   Updated: 2025/04/17 20:09:10 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/06/04 16:05:37 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ int another_check(char *orig, long int nb)
 
 	new = ft_itoa(nb);
 	if (ft_strcmp(orig, new) != 0)
-		return (1);
-	return (0);
+		return (free(new), 1);
+	return (free(new), 0);
 }
 
 int	check_for_input(char *argv, int id)
