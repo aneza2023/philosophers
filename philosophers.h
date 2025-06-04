@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 14:49:04 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/05/17 13:23:59 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/06/04 14:13:10 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ int				ft_usleep(int milisec);
 int				adding_forks(t_philo **philosopher, pthread_mutex_t **forks, int id);
 int				proper_sleep(t_philo *phil);
 int 			phil_last_leftf(t_philo *phil);
+int printing_activity(t_philo *phil, int activity);
+int printing(t_philo *phil, char *string, int activity);
 
 //observer
 int				creating_observer(t_philo **philosophers, pthread_t *philo);

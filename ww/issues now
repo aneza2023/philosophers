@@ -1,3 +1,7 @@
 should die? - ./philo 4 220 110 100 3
 die not last - ./philo 200 122 60 60 
 int check - ./philo 9 18446744073709552016 100 100 5
+
+
+free if adding_time invalid
+timestamp management

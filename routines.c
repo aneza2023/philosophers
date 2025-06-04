@@ -6,7 +6,7 @@
 /*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:55:19 by ahavrank          #+#    #+#             */
-/*   Updated: 2025/05/30 17:29:50 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/06/04 14:35:44 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ int	phil_sleeping(t_philo *phil)
 		if (phil->someone_died == 1 || phil->death == 1)
 			return (pthread_mutex_unlock(phil->lock_somedeath), 1);
 		pthread_mutex_unlock(phil->lock_somedeath);
-		printf("%ld %d is sleeping\n", t_stamp(phil), phil->id);
+		printing_activity(phil, 2);
+		//printf("%ld %d is sleeping\n", t_stamp(phil), phil->id);
 		usleep(phil->to_die * 1000);
 	}
 	return (0);
@@ -75,7 +76,7 @@ int	continue_routine(t_philo *phil)
 {
 	pthread_mutex_lock(phil->lock_somedeath);
 	pthread_mutex_lock(phil->lock_nb_meals);
-	while (phil->someone_died != 1 /* && phil->nb_of_meals != phil->opt_meals */)
+	while (phil->someone_died != 1)
 	{
 		pthread_mutex_unlock(phil->lock_nb_meals);
 		pthread_mutex_unlock(phil->lock_somedeath);
@@ -113,10 +114,11 @@ int	start_with_even(t_philo *phil)
 			if (phil_sleeping(phil) == 1)
 				return (1);
 		}
-		pthread_mutex_lock(phil->lock_somedeath);
-		if (phil->someone_died != 1 && phil->rfork != phil->lfork)
-			printf("%ld %d is thinking\n", t_stamp(phil), phil->id);
-		pthread_mutex_unlock(phil->lock_somedeath);
+		printing_activity(phil, 3);
+		// pthread_mutex_lock(phil->lock_somedeath);
+		// if (phil->someone_died != 1 && phil->rfork != phil->lfork)
+		// 	printf("%ld %d is thinking\n", t_stamp(phil), phil->id);
+		// pthread_mutex_unlock(phil->lock_somedeath);
 		if (phil->id % 2 != 0 && phil->rfork != phil->lfork)
 			usleep((phil->to_eat / 2) * 1000);
 	}
@@ -125,7 +127,6 @@ int	start_with_even(t_philo *phil)
 	return (0);
 }
 
-// //before creating threads, should be ok >> mutaxes
 int	putting_val_phil(t_philo *philosopher)
 {
 	if (locking_nb_of_meals(philosopher) == 1)
@@ -134,8 +135,6 @@ int	putting_val_phil(t_philo *philosopher)
 		return (1);
 	if (locking_someone_died(philosopher) == 1)
 		return (1);
-	// if (locking_time(philosopher) == 1)
-	// 	return (1);
 	philosopher->nb_of_sleep = 0;
 	philosopher->death = 0;
 	philosopher->nb_of_meals = 0;

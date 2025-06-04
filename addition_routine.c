@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   addition_routine.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:24:44 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/06/02 09:50:44 by codespace        ###   ########.fr       */
+/*   Updated: 2025/06/04 14:29:49 by ahavrank         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@ int	phil_last(t_philo *phil)
 		return (pthread_mutex_unlock(phil->lock_somedeath), 1);
 	}
 	pthread_mutex_unlock(phil->lock_somedeath);
-	printf("%ld %d has taken right fork\n", t_stamp(phil), phil->id);
+	printing_activity(phil, 0);
+	//printf("%ld %d has taken right fork\n", t_stamp(phil), phil->id);
 	if (phil->rfork == phil->lfork)
 	{
 		usleep(phil->to_die * 1000);
-		printf("%ld %d died\n", phil->to_die, phil->id);
+		printing_activity(phil, 4);
+		//printf("%ld %d died\n", phil->to_die, phil->id);
 		return (1);
 	}
 	phil_last_leftf(phil);
@@ -44,7 +46,8 @@ int phil_last_leftf(t_philo *phil)
 		return (pthread_mutex_unlock(phil->lock_somedeath), 1);
 	}
 	pthread_mutex_unlock(phil->lock_somedeath);
-	printf("%ld %d has taken left fork\n", t_stamp(phil), phil->id);
+	printing_activity(phil, 0);
+	//printf("%ld %d has taken left fork\n", t_stamp(phil), phil->id);
 	return (0);
 }
 
@@ -58,7 +61,8 @@ int	phil_not_last(t_philo *phil)
 		return (pthread_mutex_unlock(phil->lock_somedeath), 1);
 	}
 	pthread_mutex_unlock(phil->lock_somedeath);
-	printf("%ld %d has taken left fork\n", t_stamp(phil), phil->id);
+	printing_activity(phil, 0);
+	//printf("%ld %d has taken left fork\n", t_stamp(phil), phil->id);
 	if (phil->rfork == phil->lfork)
 		return (1);
 	pthread_mutex_lock(phil->rfork);
@@ -70,7 +74,8 @@ int	phil_not_last(t_philo *phil)
 		return (pthread_mutex_unlock(phil->lock_somedeath), 1);
 	}
 	pthread_mutex_unlock(phil->lock_somedeath);
-	printf("%ld %d has taken right fork\n", t_stamp(phil), phil->id);
+	printing_activity(phil, 0);
+	//printf("%ld %d has taken right fork\n", t_stamp(phil), phil->id);
 	return (0);
 }
 
@@ -90,7 +95,8 @@ int	check_order_forks(t_philo *phil)
 	if (phil->someone_died == 1)
 		return (pthread_mutex_unlock(phil->lock_somedeath), 1);
 	pthread_mutex_unlock(phil->lock_somedeath);
-	printf("%ld %d is eating\n", t_stamp(phil), phil->id);
+	printing_activity(phil, 1);
+	//printf("%ld %d is eating\n", t_stamp(phil), phil->id);
 	return (0);	
 }
 
@@ -100,7 +106,8 @@ int	proper_sleep(t_philo *phil)
 	if (phil->someone_died == 1 || phil->death == 1)
 		return (pthread_mutex_unlock(phil->lock_somedeath), 1);
 	pthread_mutex_unlock(phil->lock_somedeath);
-	printf("%ld %d is sleeping\n", t_stamp(phil), phil->id);
+	printing_activity(phil, 2);
+	//printf("%ld %d is sleeping\n", t_stamp(phil), phil->id);
 	usleep(phil->to_sleep * 1000);
 	return (0);
 }
