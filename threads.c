@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:54:51 by ahavrank          #+#    #+#             */
-/*   Updated: 2025/06/04 15:56:42 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/06/07 15:35:52 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ suseconds_t	t_stamp(t_philo *philosopher)
 	struct timeval	original_time;
 
 	original_time = philosopher->start;
-	pthread_mutex_lock(philosopher->lock_time);
 	gettimeofday(&current_time, NULL);
-	pthread_mutex_unlock(philosopher->lock_time);
 	betweenres = (current_time.tv_sec - original_time.tv_sec) * 1000;
 	result = (current_time.tv_usec - original_time.tv_usec) / 1000;
 	result = betweenres + result;
@@ -102,8 +100,8 @@ int	allocate_for_threads(t_val *input)
 		free(philo);
 		return (1);
 	}
-	// if (allocating_first_fork(philosopher, philo, forks, input) == 1)
-	// 	return (1);
+	if (allocating_first_fork(philosopher, philo, forks, input) == 1)
+		return (1);
 //	joining_threads(philo, philosopher);
 	return (0);
 }
