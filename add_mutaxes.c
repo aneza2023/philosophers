@@ -6,7 +6,7 @@
 /*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:40:49 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/06/07 15:50:54 by anezkahavra      ###   ########.fr       */
+/*   Updated: 2025/06/07 16:09:23 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ int	locking_nb_of_meals(t_philo *philosopher)
 
 int	locking_last_meal(t_philo *philosopher)
 {
-	suseconds_t	current_time;
-
 	philosopher->lock_last_meal = malloc(sizeof(pthread_mutex_t));
 	if (philosopher->lock_last_meal == NULL)
 	{

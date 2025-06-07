@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   addition_routine.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahavrank <ahavrank@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anezkahavrankova <anezkahavrankova@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:24:44 by anezkahavra       #+#    #+#             */
-/*   Updated: 2025/06/04 14:29:49 by ahavrank         ###   ########.fr       */
+/*   Updated: 2025/06/07 16:07:59 by anezkahavra      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@ int	phil_last(t_philo *phil)
 	//printf("%ld %d has taken right fork\n", t_stamp(phil), phil->id);
 	if (phil->rfork == phil->lfork)
 	{
+		printf("%ld %d has taken a fork\n", 0, phil->id);
 		usleep(phil->to_die * 1000);
-		printing_activity(phil, 4);
-		//printf("%ld %d died\n", phil->to_die, phil->id);
+		// printing_activity(phil, 4);
+		printf("%ld %d died\n", phil->to_die, phil->id);
 		return (1);
 	}
 	phil_last_leftf(phil);
