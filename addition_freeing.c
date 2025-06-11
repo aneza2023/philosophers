@@ -49,8 +49,8 @@ int free_forks(t_philo **philosopher, pthread_mutex_t **forks, int id)
 
 int	adding_forks(t_philo **philosopher, pthread_mutex_t **forks, int id)
 {
-	forks[id + 1] = malloc(sizeof(pthread_mutex_t));
-	if (forks[id + 1] == NULL)
+    forks[id + 1] = malloc(sizeof(pthread_mutex_t));
+       if (forks[id + 1] == NULL)
 	{
 		free_forks(philosopher, forks, id);
 		return (1);

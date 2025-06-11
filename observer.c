@@ -100,14 +100,14 @@ int	creating_observer(t_philo **philosophers, pthread_t *philo)
 	pthread_t	observthread;
 
     i = 0;
-    observer = malloc(sizeof(t_observer));
+    observer = malloc(sizeof(t_observer)); //memory works until here
 	if (observer == NULL)
         return (1);
 	philosophers[philosophers[0]->philo_nb] = NULL;
 	observer->philosophers = philosophers;
 	observer->philothread = philo;
 	if (adding_mutex_time(philosophers) == 1)
-		return (1);
+		return (free(observer), 1);
     while(i < philosophers[0]->philo_nb)
     {
         pthread_create(&philo[i], NULL, philosophers_routine, philosophers[i]);

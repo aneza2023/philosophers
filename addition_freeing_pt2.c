@@ -13,7 +13,7 @@ void    free_finish(t_philo **phil, pthread_t *philos, pthread_mutex_t **forks, 
     i = 0;
     while (i <= id)
     {
-        if (i == 0)
+        if (i == 0 && phil[i]->lock_time != NULL)
         {
             pthread_mutex_destroy(phil[i]->lock_time);
             free(phil[i]->lock_time);

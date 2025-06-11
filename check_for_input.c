@@ -88,7 +88,7 @@ int another_check(char *orig, long int nb)
 	char *new;
 
 	new = ft_itoa(nb);
-	if (new == NULL) // gives back error if allocation failed - maybe diff aproach needed
+	if (new == NULL)
 		return (1);
 	if (ft_strcmp(orig, new) != 0)
 		return (free(new), 1);

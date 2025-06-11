@@ -72,7 +72,7 @@ int	creating_threads(t_philo **philosopher, pthread_t *philo,
 			return (free_finish(philosopher, philo, forks, i), 1); 
 		i++;
 	}
-	if (creating_observer(philosopher, philo) == 1) 
+	if (creating_observer(philosopher, philo) == 1)
 		return (free_finish(philosopher, philo, forks, (i - 1)), 1);
 	free_finish(philosopher, philo, forks, i - 1);
 	return (0);
@@ -102,6 +102,5 @@ int	allocate_for_threads(t_val *input)
 	}
 	if (allocating_first_fork(philosopher, philo, forks, input) == 1)
 		return (1);
-//	joining_threads(philo, philosopher);
 	return (0);
 }
