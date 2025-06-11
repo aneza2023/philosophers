@@ -64,8 +64,7 @@ char	*ft_itoa(int n)
 		return (ft_strdup("0"));
 	if (n == -2147483648)
 		return (ft_strdup("-2147483648"));
-	//string = malloc(numb_int(n) * sizeof(char) + 1);
-	string = NULL;
+	string = malloc(numb_int(n) * sizeof(char) + 1);
 	if (string == NULL)
 		return (NULL);
 	if (n < 0)

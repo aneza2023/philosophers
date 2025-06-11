@@ -41,7 +41,7 @@ int	main(int argc, char *argv[])
 		if (check_for_input(argv[argc - 1], (argc - 1)) == 1)
 			return (write (1, "invalid\n", 8), 1);
 		argc--;
-	} // memory check
+	}
 	input = malloc(sizeof(t_val));
 	if (input == NULL)
 		return (write (1, "invalid\n", 8), 1);
@@ -58,5 +58,4 @@ int	main(int argc, char *argv[])
 	return (0);
 }
 
-// for input, could be changed based on requirements
-// input->opt_meals = -1, pokud nb of meals 0 >> confusion
+//memmory checked
