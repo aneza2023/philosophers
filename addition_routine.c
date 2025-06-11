@@ -26,7 +26,7 @@ int	phil_last(t_philo *phil)
 	//printf("%ld %d has taken right fork\n", t_stamp(phil), phil->id);
 	if (phil->rfork == phil->lfork)
 	{
-		printf("%ld %d has taken a fork\n", 0, phil->id);
+		printf("%d %d has taken a fork\n", 0, phil->id);
 		usleep(phil->to_die * 1000);
 		// printing_activity(phil, 4);
 		printf("%ld %d died\n", phil->to_die, phil->id);

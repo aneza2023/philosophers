@@ -64,7 +64,8 @@ char	*ft_itoa(int n)
 		return (ft_strdup("0"));
 	if (n == -2147483648)
 		return (ft_strdup("-2147483648"));
-	string = malloc(numb_int(n) * sizeof(char) + 1);
+	//string = malloc(numb_int(n) * sizeof(char) + 1);
+	string = NULL;
 	if (string == NULL)
 		return (NULL);
 	if (n < 0)
@@ -88,6 +89,8 @@ int another_check(char *orig, long int nb)
 	char *new;
 
 	new = ft_itoa(nb);
+	if (new == NULL) // gives back error if allocation failed - maybe diff aproach needed
+		return (1);
 	if (ft_strcmp(orig, new) != 0)
 		return (free(new), 1);
 	return (free(new), 0);
