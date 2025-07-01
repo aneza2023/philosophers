@@ -116,6 +116,7 @@ int	start_with_even(t_philo *phil)
 				return (1);
 		}
 		printing_activity(phil, 3);
+		usleep(phil->to_die / 4 * 1000); // ADDED THIS MIGHT BE ISSUE LATER, TEST AT 42
 		// pthread_mutex_lock(phil->lock_somedeath);
 		// if (phil->someone_died != 1 && phil->rfork != phil->lfork)
 		// 	printf("%ld %d is thinking\n", t_stamp(phil), phil->id);
